@@ -1818,7 +1818,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff62ff;
+  background: #8fd016;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2655,6 +2655,6 @@ embed {
 .links-of-blogroll-inline .links-of-blogroll-item {
   display: inline-block;
 }
-header {
+.header {
   background-image: url("https://ws1.sinaimg.cn/large/694830ebgy1fh3pyd05klj21kw0f2dy2.jpg") !important;
 }
