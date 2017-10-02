@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="定义 Separate the construction of a complex object from its representation so that the same construction process can create different representations.  建造者模式：将一个复杂对象的表示和构建分离，因此相同的构建过程可以创造出不同的表示。 说实话，这个模">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pattern 8. Builder模式">
+<meta property="og:url" content="https://ninggee.github.io/2017/10/02/design-pattern-8/index.html">
+<meta property="og:site_name" content="凝戈">
+<meta property="og:description" content="定义 Separate the construction of a complex object from its representation so that the same construction process can create different representations.  建造者模式：将一个复杂对象的表示和构建分离，因此相同的构建过程可以创造出不同的表示。 说实话，这个模">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/e488f771ly1fk49ossdecj20de05w74r.jpg">
+<meta property="og:updated_time" content="2017-10-02T14:25:16.536Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pattern 8. Builder模式">
+<meta name="twitter:description" content="定义 Separate the construction of a complex object from its representation so that the same construction process can create different representations.  建造者模式：将一个复杂对象的表示和构建分离，因此相同的构建过程可以创造出不同的表示。 说实话，这个模">
+<meta name="twitter:image" content="http://wx3.sinaimg.cn/mw690/e488f771ly1fk49ossdecj20de05w74r.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ninggee.github.io/2017/10/02/design-pattern-8/"/>
+
+
+
+
+
+  <title>Pattern 8. Builder模式 | 凝戈</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">凝戈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">making a big fortune with no voice</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/02/design-pattern-8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ningge">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="凝戈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Pattern 8. Builder模式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-02T22:23:36+08:00">
+                2017-10-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式学习/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
+<p>Separate the construction of a complex object from its representation so that the same construction process can create different representations.</p>
+</blockquote>
+<p>建造者模式：将一个复杂对象的表示和构建分离，因此相同的构建过程可以创造出不同的表示。</p>
+<p>说实话，这个模式和模板方法模式以及工厂方法模式有一点类似。总之都是定义好构建步骤，然后把具体的构建实现推迟到子类实现，不过他们之间还是有一些区别的。这个在之后在进一步分析。</p>
+<h3 id="如何工作"><a href="#如何工作" class="headerlink" title="如何工作"></a>如何工作</h3><p>在学习建造者模式的时候，发现《图解设计模式》和《设计模式之禅》两本书介绍的设计模式，略微有一些区别，不过仔细阅读可以发现，实际上两本书的介绍实例本质实现是相同的，只是在一些细节或者说是应用上，有一些区别。</p>
+<p>首先我们要有一个产品类，作为建造的最终产品，剩下的内容还是看代码比较好理解，<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//产品类，这是我们最后生成的产品类</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Product</span> </span>&#123;&#125;</div><div class="line"></div><div class="line"><span class="comment">//构建者接口，定义构建产品的步骤</span></div><div class="line">abstruct <span class="class"><span class="keyword">interface</span> <span class="title">Builder</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">bulidPartA</span><span class="params">()</span></span>;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildPartB</span><span class="params">()</span></span>;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildPartC</span><span class="params">()</span></span>;</div><div class="line">  <span class="comment">//返回构建的结构</span></div><div class="line">  <span class="function"><span class="keyword">public</span> abstruct Product <span class="title">getResult</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//具体的建造者类</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteBuilder</span> <span class="keyword">implements</span> <span class="title">Builder</span></span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span>  <span class="title">buildPartA</span><span class="params">()</span></span>&#123;</div><div class="line">    System.out.println(<span class="string">"building part A"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span>  <span class="title">buildPartB</span><span class="params">()</span></span>&#123;</div><div class="line">    System.out.println(<span class="string">"building part B"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span>  <span class="title">buildPartC</span><span class="params">()</span></span>&#123;</div><div class="line">    System.out.println(<span class="string">"building part C"</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> Product <span class="title">getResult</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Product();</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//指挥者类，隔离控制产品的生产过程</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Director</span> </span>&#123;</div><div class="line">  <span class="keyword">private</span> Builder builder = <span class="keyword">null</span>;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBuilder</span><span class="params">(Builder builder)</span></span>&#123;</div><div class="line">    <span class="keyword">this</span>.builder = builder;</div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> Product <span class="title">construct</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">this</span>.builder.buildPartA();</div><div class="line">    <span class="keyword">this</span>.builder.buildPartB();</div><div class="line">    <span class="keyword">this</span>.builder.buildPartC();</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.builder.getResult();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以看到，建造者模式的关键就是，由抽象的建造者类定义产品的构建方法和返回方法。然后由具体的建造者去实现这些方法。最后由指挥者类负责隔离构建步骤或者控制构建步骤。于是最后的产品就建造出来了。</p>
+<p>下面是建造者模式的图示：<br><img src="http://wx3.sinaimg.cn/mw690/e488f771ly1fk49ossdecj20de05w74r.jpg" alt="建造者模式"></p>
+<h3 id="建造者模式中的角色"><a href="#建造者模式中的角色" class="headerlink" title="建造者模式中的角色"></a>建造者模式中的角色</h3><ol>
+<li>Product：产品类，是我们最后构建的结果类，这里可以运用模板方法模式。</li>
+<li>Builder: 抽象的建造者类，制定了产品的建造方法，和返回方法。</li>
+<li>Concrete Builder： 具体的建造者类。实现了抽象建造者定义的方法，并返回一个建造好的产品类。</li>
+<li>Director: 指挥者类，负责控制建造步骤的顺序。</li>
+</ol>
+<h3 id="我理解的建造者模式"><a href="#我理解的建造者模式" class="headerlink" title="我理解的建造者模式"></a>我理解的建造者模式</h3><p>通过学习《图解设计模式》和《设计模式之禅》这两本书。我发现这两本书介绍的设计模式不太一样。但是也不好说哪个对哪个错，或者两个都对，只不过不同的情况应该应用不同的方法。</p>
+<ol>
+<li>《图解设计模式》<br>在这本书里面介绍的例子，更多是展现，由Builder类固定了构建的步骤，但是Builder的具体实现类，对Builder中定义的方法，采用不同的实现，导致了最后结果的不同（但都是属于Product类），这里介绍的东西更多的像模板方法模式。只不过，模板方法模式中的模板只是一个方法。而建造者模式的模板是一个类。</li>
+<li>《设计模式之禅》<br>在这本书里，作者更多的倾向于展现同样的步骤，但是采用的顺序不同，导致最会产生的结果的不同，同时作者也很贴心的展示了Product可以是有不同的子类实现，同时展现了在Director类中，可以控制建造的顺序，以及对客户端程序屏蔽了构建的过程。这本书里介绍的建造者模式更多的像抽象工厂模式。不过，抽象工厂模式关注的是生成一组相关或者相互依赖的对象，好像是车间生产一堆相关的零件一样。而建造者模式是建造出一个个的成熟的产品。</li>
+</ol>
+<h3 id="建造者模式的优点"><a href="#建造者模式的优点" class="headerlink" title="建造者模式的优点"></a>建造者模式的优点</h3><ol>
+<li>封装性<br>Director类屏蔽了产品构建的细节，使客户端与产品构建过程解耦</li>
+<li>容易扩展<br>由于具体的建造者比较独立，不会互相影响，添加新的建造者十分容易，不会对已经写好的建造者产生什么影响。因此容易扩展</li>
+<li>便于控制细节<br>复杂的建造过程被分解在建造者类中，使我们对建造的过程更容易控制。</li>
+</ol>
+<h3 id="建造者模式适应场景"><a href="#建造者模式适应场景" class="headerlink" title="建造者模式适应场景"></a>建造者模式适应场景</h3><ol>
+<li>需要生产的产品又复杂的建造过程</li>
+<li>多个零件，可以组成不同的结果的时候</li>
+<li>多个步骤，不同的顺序可以产生不同的结果的时候</li>
+</ol>
+<h3 id="建造者模式的缺点"><a href="#建造者模式的缺点" class="headerlink" title="建造者模式的缺点"></a>建造者模式的缺点</h3><ol>
+<li>产品差异比较大时，不应该使用建造者模式（不算一个Product了）</li>
+<li>当产品建造内部的变化很复杂的时候，会产生大量的建造者具体实现类，导致系统变得庞大复杂。</li>
+</ol>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a href="https://book.douban.com/subject/26933281/" target="_blank" rel="external">图解设计模式</a><br><a href="https://book.douban.com/subject/4260618/" target="_blank" rel="external">设计模式之禅</a><br><a href="http://design-patterns.readthedocs.io/zh_CN/latest/creational_patterns/builder.html#id16" target="_blank" rel="external">建造者模式</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/02/design-pattern-7/" rel="next" title="Pattern 7. Prototype模式">
+                <i class="fa fa-chevron-left"></i> Pattern 7. Prototype模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <p class="site-author-name" itemprop="name">ningge</p>
+            <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何工作"><span class="nav-number">2.</span> <span class="nav-text">如何工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建造者模式中的角色"><span class="nav-number">3.</span> <span class="nav-text">建造者模式中的角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#我理解的建造者模式"><span class="nav-number">4.</span> <span class="nav-text">我理解的建造者模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建造者模式的优点"><span class="nav-number">5.</span> <span class="nav-text">建造者模式的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建造者模式适应场景"><span class="nav-number">6.</span> <span class="nav-text">建造者模式适应场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建造者模式的缺点"><span class="nav-number">7.</span> <span class="nav-text">建造者模式的缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献"><span class="nav-number">8.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ningge</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" count="50" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>

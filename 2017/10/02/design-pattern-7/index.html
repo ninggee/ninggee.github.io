@@ -77,7 +77,7 @@
 <meta property="og:description" content="定义 Specify the kinds of objects to create using a prototypical instance,and create new objects by copying this prototype.  使用一个原型的实例指定要创建的对象的种类，然后通过复制这个原型来创建对象。 实际上原型模式也是一个比较简单的模式，学习到现在，简单的模式一共有三个：  单">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://wx4.sinaimg.cn/mw690/e488f771ly1fk41ftixx4j20cd07v3z4.jpg">
-<meta property="og:updated_time" content="2017-10-02T09:39:55.969Z">
+<meta property="og:updated_time" content="2017-10-02T13:28:20.828Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Pattern 7. Prototype模式">
 <meta name="twitter:description" content="定义 Specify the kinds of objects to create using a prototypical instance,and create new objects by copying this prototype.  使用一个原型的实例指定要创建的对象的种类，然后通过复制这个原型来创建对象。 实际上原型模式也是一个比较简单的模式，学习到现在，简单的模式一共有三个：  单">
@@ -335,7 +335,7 @@
 </ul>
 <p>对于原型模式来说，重要的就是创建新的对象了，可以看到，重点就是通过复制的方式生成对象。</p>
 <h3 id="如何工作"><a href="#如何工作" class="headerlink" title="如何工作"></a>如何工作</h3><p>对于原型模式如何工作，它的定义已经讲的很清楚了，就是：使用复制来生成对象。<br>对于<strong>JAVA</strong>来说，复制对象是一件很简单的事情，首先，<code>Object</code>对象中就存在一个<code>clone</code>方法，其次，还有一个<code>Cloneable</code>接口，标识了一个对象是可以拷贝的，所以，只要我们在声明类的时候，实现这个接口，并覆写<code>clone</code>方法就可以实现原型模式了。<br>下面是原型模式的示例代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//面向接口编程，告诉我们，要先定义抽象类或者接口，我们基于接口编程</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Product</span> <span class="keyword">extends</span> <span class="title">Cloneable</span></span>&#123;</div><div class="line">    <span class="comment">//这个方法就是我们复制对象的方法</span></div><div class="line">    <span class="comment">//实际上，使用JAVA中的clone方法也可以</span></div><div class="line">    <span class="comment">//但是为了比较明显突出，就使用一个新的方法</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Product <span class="title">createClone</span><span class="params">()</span></span>;</div><div class="line">    </div><div class="line">    <span class="comment">// some class specified methods</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//具体类</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteProduct</span> <span class="keyword">implements</span> <span class="title">Product</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="comment">//实现方法</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Product <span class="title">createClone</span><span class="params">()</span></span>&#123;</div><div class="line">      Product p = <span class="keyword">null</span>;</div><div class="line">      <span class="keyword">try</span> &#123;</div><div class="line">        p = (Product)clone();</div><div class="line">      &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</div><div class="line">        e.printStackTrace();</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">return</span> p;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// some class specified methods</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>通过上面的示例代码，我们很容易看出，原型模式主要是通过复制已有的对象来生成新的对象。<br>在<strong>JAVA</strong>中，自带的<code>Cloneable</code>接口，可以帮助我们很容易实现原型模式，<br>如果需要需要在类中，指定一些其他的方法，或者是加一些约束，添加一些钩子函数，也可以像示例代码一样，自己创建一个新的方法来实现原型模式。</p>
+<p>通过上面的示例代码，我们很容易看出，原 型模式主要是通过复制已有的对象来生成新的对象。<br>在<strong>JAVA</strong>中，自带的<code>Cloneable</code>接口，可以帮助我们很容易实现原型模式，<br>如果需要需要在类中，指定一些其他的方法，或者是加一些约束，添加一些钩子函数，也可以像示例代码一样，自己创建一个新的方法来实现原型模式。</p>
 <p>下面是原型模式的图示：<br><img src="http://wx4.sinaimg.cn/mw690/e488f771ly1fk41ftixx4j20cd07v3z4.jpg" alt="prototype pattern"></p>
 <h3 id="原型模式中的角色"><a href="#原型模式中的角色" class="headerlink" title="原型模式中的角色"></a>原型模式中的角色</h3><ol>
 <li><code>Prototype</code>: 原型对象负责定义使用复制来生成新对象的方法（接口），同时在类中可以加入对子类的约束</li>
@@ -392,6 +392,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/02/design-pattern-8/" rel="prev" title="Pattern 8. Builder模式">
+                Pattern 8. Builder模式 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -467,7 +471,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
