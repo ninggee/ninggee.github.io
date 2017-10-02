@@ -229,6 +229,178 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/02/design-pattern-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ningge">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="凝戈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/02/design-pattern-6/" itemprop="url">Pattern 6. Singleton模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-02T14:47:11+08:00">
+                2017-10-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式学习/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
+<p>Ensure a class has only one instance, and provide a global point of access to it.</p>
+</blockquote>
+<p>确保一个类只有一个实例，并且使整个系统都能访问它。（提供一个全局的可以访问到它的点）</p>
+<p>单例模式是个比较简单的模式，当你想要确保：</p>
+<ul>
+<li>在任何情况下都绝对只要一个实例</li>
+<li>在程序中表示出“在任何时刻只存在一个实例”</li>
+</ul>
+<p>的时候，就是使用单例模式的时候</p>
+<h3 id="如何工作"><a href="#如何工作" class="headerlink" title="如何工作"></a>如何工作</h3><p>单例模式确实比较简单，用一个简单的类来表示一下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</div><div class="line"> <span class="comment">//此句表示当Singletong第一次被使用使初始化该变量</span></div><div class="line"> <span class="keyword">private</span> <span class="keyword">static</span> Singleton singleton = <span class="keyword">new</span> Singleton();</div><div class="line"> </div><div class="line"> <span class="comment">//private关键字保证外部无法通过new来实例化Singleton类</span></div><div class="line"> <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="comment">// initialize operations</span></div><div class="line"> &#125;</div><div class="line"> </div><div class="line"> <span class="comment">//该方法提供了全局可访问该类的点</span></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.singleton;</div><div class="line"> &#125;</div><div class="line"> </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以看到，对于单例类来说，代码和很简单，使用<code>private</code>关键字修饰构造函数，保证了该类不会被外部使用<code>new</code>实例化（使用反射还是可以实例化的），通过<code>getInstance</code>方法，提供了全局的访问点。<br>照例，下面是单例模式的图示：<br><img src="https://wx2.sinaimg.cn/mw690/e488f771gy1fk3wisail0j20cl055aam.jpg" alt="单例模式"></p>
+<h3 id="单例模式中的角色"><a href="#单例模式中的角色" class="headerlink" title="单例模式中的角色"></a>单例模式中的角色</h3><p>在单例模式中，只有单例类这一个角色，该角色有一个返回唯一实例的静态方法（静态很重要）。</p>
+<h3 id="单例模式的优点"><a href="#单例模式的优点" class="headerlink" title="单例模式的优点"></a>单例模式的优点</h3><ol>
+<li>只要一个实例，减少开销</li>
+<li>可以避免对资源的多重占用</li>
+<li>可以设置全局访问点，优化资源访问</li>
+</ol>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ol>
+<li>需要定义大量的静态常量和静态方法（比如工具类，配置类）的时候</li>
+<li>一个对象需要频繁的创建，销毁时，且创建操作很消耗资源的时候</li>
+<li>整个项目中，只需要一个的共享访问点或共享数据（比如计数器</li>
+</ol>
+<h3 id="单例模式的缺点"><a href="#单例模式的缺点" class="headerlink" title="单例模式的缺点"></a>单例模式的缺点</h3><ol>
+<li>对测试不友好<br>不容易mock（因为没什么接口）</li>
+<li>难以扩展</li>
+<li>违背单一职责原则<br>保证单例和业务逻辑在一个类实现。</li>
+</ol>
+<h3 id="单例模式的扩展"><a href="#单例模式的扩展" class="headerlink" title="单例模式的扩展"></a>单例模式的扩展</h3><p>单例模式可以扩展成为多例模式。<br>只需在类里面只有一个容易保存固定数量的实例即可。</p>
+<h3 id="需要注意的一点"><a href="#需要注意的一点" class="headerlink" title="需要注意的一点"></a>需要注意的一点</h3><p>单例模式在<strong>JAVA</strong>中要注意实现方法，否则在多线程情况下，可能会产生多个实例。（饿汉和懒汉式单例</p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a href="https://book.douban.com/subject/26933281/" target="_blank" rel="external">图解设计模式</a><br><a href="https://book.douban.com/subject/4260618/" target="_blank" rel="external">设计模式之禅</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/02/design-pattern-5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1114,7 +1286,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
