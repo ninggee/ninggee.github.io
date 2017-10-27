@@ -53,7 +53,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Git," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -69,18 +69,17 @@
 
 
 
-<meta name="description" content="在学习Git的过程中，有点^和~这两个符号有点迷茫。通过在StackOverFlow上查找答案，终于明白了两者的区别：  ^：是回退到父元素，当父元素有多个的时候，^{n}指定第几个父亲，比如HEAD^等价于HEAD^1指向第一个父提交，同理HEAD^2指向第二个 ~:指的是在继承层次上的回退，比如HEAD~2指定的是在继承层级上回退两层  官方文档上有个图很形象，我就直接粘过来吧 G   H">
-<meta name="keywords" content="Git">
+<meta name="description" content="折线图                                                                             Can信息                                                 var app = new Vue({     el: &apos;#app&apos;,     data: {        confi">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Git中HEAD^与HEAD~的区别">
-<meta property="og:url" content="https://ninggee.github.io/2017/10/19/git-knowledge-1/index.html">
+<meta property="og:title" content="凝戈">
+<meta property="og:url" content="https://ninggee.github.io/2017/10/26/line/index.html">
 <meta property="og:site_name" content="凝戈">
-<meta property="og:description" content="在学习Git的过程中，有点^和~这两个符号有点迷茫。通过在StackOverFlow上查找答案，终于明白了两者的区别：  ^：是回退到父元素，当父元素有多个的时候，^{n}指定第几个父亲，比如HEAD^等价于HEAD^1指向第一个父提交，同理HEAD^2指向第二个 ~:指的是在继承层次上的回退，比如HEAD~2指定的是在继承层级上回退两层  官方文档上有个图很形象，我就直接粘过来吧 G   H">
+<meta property="og:description" content="折线图                                                                             Can信息                                                 var app = new Vue({     el: &apos;#app&apos;,     data: {        confi">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-19T15:27:28.318Z">
+<meta property="og:updated_time" content="2017-10-25T16:10:39.426Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Git中HEAD^与HEAD~的区别">
-<meta name="twitter:description" content="在学习Git的过程中，有点^和~这两个符号有点迷茫。通过在StackOverFlow上查找答案，终于明白了两者的区别：  ^：是回退到父元素，当父元素有多个的时候，^{n}指定第几个父亲，比如HEAD^等价于HEAD^1指向第一个父提交，同理HEAD^2指向第二个 ~:指的是在继承层次上的回退，比如HEAD~2指定的是在继承层级上回退两层  官方文档上有个图很形象，我就直接粘过来吧 G   H">
+<meta name="twitter:title" content="凝戈">
+<meta name="twitter:description" content="折线图                                                                             Can信息                                                 var app = new Vue({     el: &apos;#app&apos;,     data: {        confi">
 
 
 
@@ -110,13 +109,13 @@
 
 
 
-  <link rel="canonical" href="https://ninggee.github.io/2017/10/19/git-knowledge-1/"/>
+  <link rel="canonical" href="https://ninggee.github.io/2017/10/26/line/"/>
 
 
 
 
 
-  <title>Git中HEAD^与HEAD~的区别 | 凝戈</title>
+  <title> | 凝戈</title>
   
 
 
@@ -233,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/19/git-knowledge-1/">
+    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/26/line/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ningge">
@@ -250,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Git中HEAD^与HEAD~的区别</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -262,8 +261,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-19T23:23:38+08:00">
-                2017-10-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-26T00:09:44+08:00">
+                2017-10-26
               </time>
             
 
@@ -272,28 +271,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Git学习/" itemprop="url" rel="index">
-                    <span itemprop="name">Git学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -322,33 +299,76 @@
       
 
       
-        <p>在学习Git的过程中，有点<code>^</code>和<code>~</code>这两个符号有点迷茫。通过在StackOverFlow上查找答案，终于明白了两者的区别：</p>
-<ol>
-<li>^：是回退到父元素，当父元素有多个的时候，^{n}指定第几个父亲，比如HEAD^等价于HEAD^1指向第一个父提交，同理HEAD^2指向第二个</li>
-<li>~:指的是在继承层次上的回退，比如HEAD~2指定的是在继承层级上回退两层</li>
-</ol>
-<p><a href="http://www.kernel.org/pub/software/scm/git/docs/git-rev-parse.html" target="_blank" rel="external">官方文档</a>上有个图很形象，我就直接粘过来吧</p>
-<pre><code>G   H   I   J
- \ /     \ /
-  D   E   F
-   \  |  / \
-    \ | /   |
-     \|/    |
-      B     C
-       \   /
-        \ /
-         A
-A =      = A^0
-B = A^   = A^1     = A~1
-C = A^2  = A^2
-D = A^^  = A^1^1   = A~2
-E = B^2  = A^^2
-F = B^3  = A^^3
-G = A^^^ = A^1^1^1 = A~3
-H = D^2  = B^^2    = A^^^2  = A~2^2
-I = F^   = B^3^    = A^^3^
-J = F^2  = B^3^2   = A^^3^2
-</code></pre>
+        <html>
+<head>
+    <title>折线图</title>
+    <script src="./vue.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.31/css/uikit.min.css">
+
+    <!-- UIkit JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.31/js/uikit.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.31/js/uikit-icons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
+</head>
+<body>
+
+<div id="app" class="uk-flex uk-flex-column uk-width-auto" style="margin: 20px">
+    <!--<div class="uk-card-default" style="padding-left: 10px; font-size: 16px; height: 40px; vertical-align:middle" v-on:click="back">-->
+    <!--<span style="line-height: 40px"><svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" ratio="1"><polyline fill="none" stroke="#000" stroke-width="1.03" points="13 16 7 10 13 4"></polyline></svg>返回</span>-->
+    <!--</div>-->
+    <div class="uk-card uk-card-default uk-width-auto">
+        <div class="uk-card-header">
+            <h6 class="uk-card-title">Can信息</h6>
+        </div>
+        <div class="uk-card-body">
+            <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+var app = new Vue({
+    el: '#app',
+    data: {
+       config: {"data":{"type":"line","labels":["6607"],"datasets":[{"backgroundColor":"#ff9f40","borderColor":"#ff9f40","data":["0.0"],"fill":false,"label":"ESC_VehSpdVD"},{"backgroundColor":"#ff6384","borderColor":"#ff6384","data":["62.2125"],"fill":false,"label":"ESC_VehSpd"}],"options":{}},"options":{"responsive":true,"responsiveAnimationDuration":0,"maintainAspectRatio":true,"events":["mousemove","mouseout","click","touchstart","touchmove"],"hover":{"onHover":null,"mode":"nearest","intersect":true,"animationDuration":400},"onClick":null,"defaultColor":"rgba(0,0,0,0.1)","defaultFontColor":"#666","defaultFontFamily":"'Helvetica Neue', 'Helvetica', 'Arial', sans-serif","defaultFontSize":12,"defaultFontStyle":"normal","showLines":true,"elements":{"arc":{"backgroundColor":"rgba(0,0,0,0.1)","borderColor":"#fff","borderWidth":2},"line":{"tension":0.4,"backgroundColor":"rgba(0,0,0,0.1)","borderWidth":3,"borderColor":"rgba(0,0,0,0.1)","borderCapStyle":"butt","borderDash":[],"borderDashOffset":0,"borderJoinStyle":"miter","capBezierPoints":true,"fill":true},"point":{"radius":3,"pointStyle":"circle","backgroundColor":"rgba(0,0,0,0.1)","borderColor":"rgba(0,0,0,0.1)","borderWidth":1,"hitRadius":1,"hoverRadius":4,"hoverBorderWidth":1},"rectangle":{"backgroundColor":"rgba(0,0,0,0.1)","borderColor":"rgba(0,0,0,0.1)","borderSkipped":"bottom","borderWidth":0}},"layout":{"padding":{"top":0,"right":0,"bottom":0,"left":0}},"plugins":{"filler":{"propagate":true}},"animation":{"duration":1000,"easing":"easeOutQuart"},"tooltips":{"enabled":true,"custom":null,"mode":"nearest","position":"average","intersect":true,"backgroundColor":"rgba(0,0,0,0.8)","titleFontStyle":"bold","titleSpacing":2,"titleMarginBottom":6,"titleFontColor":"#fff","titleAlign":"left","bodySpacing":2,"bodyFontColor":"#fff","bodyAlign":"left","footerFontStyle":"bold","footerSpacing":2,"footerMarginTop":6,"footerFontColor":"#fff","footerAlign":"left","yPadding":6,"xPadding":6,"caretPadding":2,"caretSize":5,"cornerRadius":6,"multiKeyBackground":"#fff","displayColors":true,"borderColor":"rgba(0,0,0,0)","borderWidth":0,"callbacks":{}},"legend":{"display":true,"position":"top","fullWidth":true,"reverse":false,"weight":1000,"onHover":null,"labels":{"boxWidth":40,"padding":10}},"title":{"display":false,"fontStyle":"bold","fullWidth":true,"lineHeight":1.2,"padding":10,"position":"top","text":"","weight":2000}}},
+       id: "",
+       chart: {}
+    },
+    created: function() {
+        var id_index = window.location.href.indexOf("?id=")
+        this.id = window.location.href.substring(id_index + 4)
+    },
+    mounted: function() {
+        var ctx = document.getElementById("myChart");
+        this.chart = new Chart(ctx, this.config);
+        // this.getDatas()
+
+    },
+    computed: {
+
+    },
+    methods: {
+        getDatas: function() {
+            // result = Android.getLineDatas(this.id)
+            // console.log(result)
+            // result = JSON.parse(result)
+
+            // this.config.data.labels = result['labels']
+            // this.config.data.datasets = result['datasets']
+            // console.log(JSON.stringify(this.config))
+            // //console.log(this.config.data.datasets)
+            // this.chart.update()
+            // //setTimeout(this.getDatas, 1000)
+
+
+        }
+
+    }
+})
+</script>
+
+</body>
+</html>
       
     </div>
     
@@ -363,12 +383,6 @@ J = F^2  = B^3^2   = A^^3^2
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Git/" rel="tag"># Git</a>
-          
-        </div>
-      
 
       
       
@@ -378,8 +392,8 @@ J = F^2  = B^3^2   = A^^3^2
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/19/design-pattern-9/" rel="next" title="Pattern 9. Bridge模式">
-                <i class="fa fa-chevron-left"></i> Pattern 9. Bridge模式
+              <a href="/2017/10/24/design-pattern-10/" rel="next" title="Pattern 10. Decorate模式">
+                <i class="fa fa-chevron-left"></i> Pattern 10. Decorate模式
               </a>
             
           </div>
@@ -388,8 +402,8 @@ J = F^2  = B^3^2   = A^^3^2
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/10/24/design-pattern-10/" rel="prev" title="Pattern 10. Decorate模式">
-                Pattern 10. Decorate模式 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/10/27/design-pattern-11/" rel="prev" title="Pattern 11.  Strategy模式">
+                Pattern 11.  Strategy模式 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -442,8 +456,17 @@ J = F^2  = B^3^2   = A^^3^2
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <p class="site-author-name" itemprop="name">ningge</p>
@@ -504,6 +527,22 @@ J = F^2  = B^3^2   = A^^3^2
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Can信息</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
