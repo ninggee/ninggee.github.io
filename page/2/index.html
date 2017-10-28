@@ -229,6 +229,182 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/01/design-pattern-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ningge">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="凝戈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/01/design-pattern-4/" itemprop="url">Pattern 4. Factory Method模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-01T15:23:33+08:00">
+                2017-10-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式学习/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
+<p>Define an interface for creating an object,but let subclasses decide which class to instantiate.Factory Method lets a class defer instantiation to subclasses.</p>
+</blockquote>
+<p>定义一个用于生成对象的接口，但是由其子类决定实例化哪个类。工厂方法模式使实例化工作从父类推迟到子类执行。</p>
+<h3 id="如何工作"><a href="#如何工作" class="headerlink" title="如何工作"></a>如何工作</h3><p>在我看来，工厂方法模式实际上是替代了<code>new</code>关键字的工作，通过使接口的一个方法作为生产对象的<strong>工厂</strong>，来代替<code>new</code>关键字生成对象。<br>在模板方法模式中，主要有两类角色，一种是工厂，一种是产品，工厂用来生成产品。<br>下面还是用一段代码来描述工厂方法模式的原理吧：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//抽象的产品类</span></div><div class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractProduct</span> </span>&#123;</div><div class="line">  <span class="comment">//定义抽象的产品类的方法</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">doThing1</span><span class="params">()</span></span>;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">doThing2</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//抽象的定义工厂方法的类</span></div><div class="line"><span class="comment">//为了避免与抽象工厂模式混淆，用了上面的拗口的说法</span></div><div class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractFactory</span> </span>&#123;</div><div class="line">  <span class="comment">//抽象的工厂方法</span></div><div class="line">  <span class="comment">//此处实现方式可以有多样</span></div><div class="line">  <span class="comment">//此处还可以利用到模板方法模式</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Product <span class="title">factoryMethod</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//-------------以下为具体的实现类-----------</span></div><div class="line"></div><div class="line"><span class="comment">//具体的产品类</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteProdcut</span> <span class="keyword">extends</span> <span class="title">AbstractProduct</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doThing1</span><span class="params">()</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"concrete class do thing one"</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">public</span> <span class="keyword">void</span> doThing1=<span class="number">2</span>() &#123;</div><div class="line">    System.out.println(<span class="string">"concrete class do thing two"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//具体的工厂类</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteFactory</span> <span class="keyword">extends</span> <span class="title">AbastractFactory</span></span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> Product <span class="title">factoryMethod</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ConcreteProduct();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到，我们的工厂类和产品类是对应的，一般来说一个工厂对应一个产品，实际上从编写代码的角度上来看待问题，比如我们定义的抽象类，抽象的工厂类要知道他生产的产品，因此我们要先定义抽象的产品类，要不然的话，返回类型没有办法写，如果写<code>Object</code>(JAVA中的所有对象的最终父类），那就太宽泛了，不够好，这样我们生成抽象的产品类，还可以在产品类中加入对产品的约束。<br>我们还要注意到，由于工厂方法模式是将一个方法作为工厂（为与以后的抽象工厂模式区别），因次，该方法是整个模式的核心，类似的模板方法模式也是这样，因此，在工厂方法中，可以应用模板方法模式。<br>对于抽象的工厂类，其中的工厂方法可以有多种编写方法：</p>
+<ol>
+<li>类似上面实例代码那样，直接声明为抽象的方法</li>
+<li>可以在方法里面返回默认的Product类，但这要求Product类不能是抽象类</li>
+<li>可以在里面抛出异常，以禁止该方法被直接调用，同时强制子类覆写改该方法。</li>
+</ol>
+<p>下面是工厂方法模式的示例图：</p>
+<p><img src="http://wx2.sinaimg.cn/mw690/e488f771ly1fk2rxrntiej20v20lojw4.jpg" alt="factory method pattern"></p>
+<h3 id="工厂方法模式中的角色"><a href="#工厂方法模式中的角色" class="headerlink" title="工厂方法模式中的角色"></a>工厂方法模式中的角色</h3><ol>
+<li><code>AbstractProduct</code>: 抽象的产品类，用于声明产品类所持有的方法，添加对产品类的约束</li>
+<li><code>AbstractFactory</code>: 抽象的工厂类，声明了如何生成对象的方法</li>
+<li><code>ConcreteProdcut</code>:具体的产品类，实现了抽象产品类定义的方法，满足了约束</li>
+<li><code>ConcreteFactory</code>:具体的工厂类，实现了生成对象的接口，实现了不用<code>new</code>，就可以生成一个对象</li>
+</ol>
+<h3 id="为什么使用工厂方法模式"><a href="#为什么使用工厂方法模式" class="headerlink" title="为什么使用工厂方法模式"></a>为什么使用工厂方法模式</h3><p>工厂方法模式实现了工厂类对具体的子类的解耦，实现了依赖倒置的设计原则，工厂类不必知道要生产的具体是什么产品，也不必知道到底是哪个子类如何实现的工厂方法，他只要知道自己生成的产品类的对象，自己有一个工厂方法即可。<br>工厂方法有以下几个优点：</p>
+<ol>
+<li>良好的封装性</li>
+<li>优秀的扩展性<br>很容易就可以添加新的产品，而不用对原有代码做什么大的修改</li>
+<li>屏蔽了产品类</li>
+</ol>
+<h3 id="工厂方法模式的应用场景"><a href="#工厂方法模式的应用场景" class="headerlink" title="工厂方法模式的应用场景"></a>工厂方法模式的应用场景</h3><ol>
+<li>用于代替<code>new</code>创建对象，所有可以用<code>new</code>的地方都可以用工厂方法模式，但要考虑复杂度和实用性</li>
+<li>构建灵活的可扩展的框架</li>
+</ol>
+<h3 id="工厂方法模式的扩展"><a href="#工厂方法模式的扩展" class="headerlink" title="工厂方法模式的扩展"></a>工厂方法模式的扩展</h3><ol>
+<li>简单工厂模式<br>简单的说就是去掉抽象的工厂类，将工厂方法设置成静态的方法。这种方法简化了类图，也简化了调用方的写法</li>
+<li>多工厂方法<br>这个扩展实际上就是每个产品一个工厂类，也就相当于多个工厂类了。<br>实际上，多个产品存在的话，可以只要一个产品类，只要提供要生成哪个产品的信息就可以了。但是多工厂方法，就是一个产品一个工厂类，这样不用给工厂方法传递要实现那个产品的参数，直接调用相应的生成类就可以了</li>
+</ol>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a href="https://book.douban.com/subject/26933281/" target="_blank" rel="external">图解设计模式</a><br><a href="https://book.douban.com/subject/4260618/" target="_blank" rel="external">设计模式之禅</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/01/design-pattern-3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -769,7 +945,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
