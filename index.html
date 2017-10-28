@@ -229,6 +229,170 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/28/design-pattern-14/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ningge">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="凝戈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/28/design-pattern-14/" itemprop="url">Pattern 14. Chain of Responsibility模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-28T22:11:22+08:00">
+                2017-10-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式学习/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
+<p>Avoid coupling the sender of a request to its receiver by giving more than one object a chance to handle the request.Chain the receiving objects and pass the request along the chain until an object handles it.</p>
+</blockquote>
+<p>通过使用超过一个对象机会来处理请求来避免请求的发送者和接受者耦合。把接收对象串起来成链，沿着这条链传递请求直到一个对象处理它。</p>
+<p>正如这个模式的名字–责任链模式说的那样，整个模式最后形成了一个处理请求的链。这也就暗示着责任链模式最重要的一点就是那个链。下面我们来看一下这个模式是如何工作的。</p>
+<h3 id="如何工作"><a href="#如何工作" class="headerlink" title="如何工作"></a>如何工作</h3><p>责任链模式，重点是形成那个链。我们很自然的就想到了我们学习过的数据结构–链表。链表是如何做的呢？链表除了储存了自己的信息之外，还储存了自己的后继的信息。这也正是责任链模式所采用的方法。下面我们来看代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//请求类</span></div><div class="line"><span class="comment">//在这个模式里，请求都没有出现在类图里，就不实现了，</span></div><div class="line"><span class="comment">//用一个空类来占位</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Request</span> </span>&#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//处理者类</span></div><div class="line"><span class="comment">//抽象的处理者</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Handler</span> </span>&#123;</div><div class="line">    <span class="comment">//保存后继元素来形成责任链</span></div><div class="line">    <span class="keyword">private</span> Handler successor;</div><div class="line">    </div><div class="line">    <span class="comment">//父类中定义一个接收处理者的构造函数</span></div><div class="line">    <span class="comment">//来保证子类一定有这个构造函数</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Handler</span><span class="params">(Handler handler)</span> </span>&#123;</div><div class="line">        successor = handler;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//判断当前的处理者能否处理当前请求</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">boolean</span> <span class="title">canHandle</span><span class="params">(Request request)</span></span>;</div><div class="line">    </div><div class="line">    <span class="comment">//处理请求的代码</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">handle</span><span class="params">(Request request)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">//获取后继元素</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Handler <span class="title">getSuccessor</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> successor;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//算是用到了模板方法模式吧</span></div><div class="line">    <span class="comment">//可以加上final关键字来阻止子类修改</span></div><div class="line">    <span class="comment">//判断当前的类能不能处理</span></div><div class="line">    <span class="comment">//能就处理，不能就交给下一个处理者处理</span></div><div class="line">    <span class="comment">//如果最后也没有元素来处理，就抛出异常或者用其他办法</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleRequest</span><span class="params">(Request request)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(canHandle(request)) &#123;</div><div class="line">            handle(request);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">if</span>(getSuccessor() != <span class="keyword">null</span>) &#123;</div><div class="line">                getSuccessor().handleRequest(request);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="comment">//没有处理者了，是抛出异常还是忽略都可以</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//具体的处理者</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteHandler</span> <span class="keyword">extends</span> <span class="title">Handler</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteHandler</span><span class="params">(Handler handler)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(handler);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">canHandle</span><span class="params">(Request request)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">handle</span><span class="params">(Request request)</span> </span>&#123;</div><div class="line">        <span class="comment">//处理请求的方法</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到，责任链模式的主要思想就是通过类似链表的形式形成责任链，如果一个处理者可以处理，那么就在这里处理，如果不可以就传给下一个元素，这样的话，就避免了请求者和处理者解耦，也不需要一个角色来分配请求给对应的处理者。</p>
+<p>下面是责任链模式的图示：</p>
+<p><img src="https://wx1.sinaimg.cn/mw690/e488f771ly1fkybl5mnrcj21e00u4n29.jpg" alt="AEE2A4CC-A841-46DD-8CDF-6B5DFFC33410.png"></p>
+<h3 id="责任链模式中的角色"><a href="#责任链模式中的角色" class="headerlink" title="责任链模式中的角色"></a>责任链模式中的角色</h3><ol>
+<li>Handler:处理者定义了处理请求的接口，实现了责任链模式的基本逻辑，每个处理者保存自己的后继者，如果自己能处理请求就自己处理，不能处理就传给下一给处理者。</li>
+<li>ConcreteHandler：具体的处理者。实现了各自的处理函数。</li>
+<li>Client:客户端负责生成责任链，将请求发给第一个处理者。</li>
+</ol>
+<h3 id="我理解的责任链模式"><a href="#我理解的责任链模式" class="headerlink" title="我理解的责任链模式"></a>我理解的责任链模式</h3><p>我觉得责任链模式主要的意义在于解耦，解耦了请求和请求的处理者。同时也不需要一个分发请求的角色。<br>而责任链模式的重点在于链，形成了一个链。这样就不用考虑到底谁能处理请求，处理不了就一直往下传递就可以了。</p>
+<h3 id="责任链模式的优点"><a href="#责任链模式的优点" class="headerlink" title="责任链模式的优点"></a>责任链模式的优点</h3><p>优点就是解耦了请求和请求的处理者。</p>
+<h3 id="责任链模式的缺点"><a href="#责任链模式的缺点" class="headerlink" title="责任链模式的缺点"></a>责任链模式的缺点</h3><ol>
+<li>debug困难。当责任链成形之后，在某一环节出错，找到到底是哪一个环节出错是很困难得。</li>
+<li>当责任链特别长的时候，会造成形成的问题。每个请去要很久才会有回复。</li>
+</ol>
+<h3 id="责任链模式的应用场景"><a href="#责任链模式的应用场景" class="headerlink" title="责任链模式的应用场景"></a>责任链模式的应用场景</h3><p>我个人觉得处理请求这类的情况都可以用责任链模式。</p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a href="https://book.douban.com/subject/26933281/" target="_blank" rel="external">图解设计模式</a><br><a href="https://book.douban.com/subject/4260618/" target="_blank" rel="external">设计模式之禅</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/28/design-pattern-13/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1797,179 +1961,6 @@ J = F^2  = B^3^2   = A^^3^2
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/02/design-pattern-5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ningge">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="凝戈">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/02/design-pattern-5/" itemprop="url">Pattern 5. Abstract Factory模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-02T00:46:53+08:00">
-                2017-10-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式学习/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
-<p>Provide an interface for creating families of related or dependent objects without specifying their concrete classes.</p>
-</blockquote>
-<p>为创建一组相关或者相互依赖的对象提供接口，而不用指定具体类。</p>
-<p>虽然这个定义很简单，但是我觉得这是我学前几个设计模式中，最复杂，最难理解的一个。下面进行具体的讲解。</p>
-<h3 id="如何工作"><a href="#如何工作" class="headerlink" title="如何工作"></a>如何工作</h3><p>由于抽象工厂模式中涉及的类比较多，这个逻辑也有一点复杂，笔者就不献丑自己写实例代码了，直接结合《设计模式之禅》和《图解设计模式》之中的类图进行分析。</p>
-<ol>
-<li>图解设计模式中的例子<br><img src="http://wx3.sinaimg.cn/mw690/e488f771ly1fk387sal1tj211812mwn7.jpg" alt="图解设计模式的例子"><br>可以看到，整个类图分成实现类和抽象类两部分，其中，抽象类也可以分成两部分，产品类和工厂类。我们可以看到的是，产品类有多个，同时他们之间还有一定的关系（相关或者相互依赖），初步看来这个类图很符合抽象工厂模式的定义。<br>那么到底是如何工作的呢？<br>实际上，我们可以看到，抽象工厂类，将多个生成多个关联的对象的函数放在了一个类里。到具体的类的时候，一种产品对应一个工厂。<br>实际上，我们可以看到，抽象工厂模式，本质上也就是工厂方法模式，只不过抽象工厂模式在一个类里有多个生成对象的函数（工厂方法）。</li>
-<li>设计模式之禅的例子<br><img src="http://wx3.sinaimg.cn/mw690/e488f771ly1fk387rrbi3j20o60lkdka.jpg" alt="设计模式之禅的例子"><br>设计模式之禅中的例子，比较好的一点是，提供了两类产品（男性和女性），但原理是相同的，都是将多个相关对象的生成的操作放到了一个类中。</li>
-</ol>
-<p>从以上两个例子中，我们可以总结出，抽象工厂模式本质上还是工厂方法模式，只不过将对多个对象（产品）的生成放到了一个类（工厂）中。</p>
-<p>下面是抽象工厂模式的图示：<br><img src="http://wx3.sinaimg.cn/mw690/e488f771ly1fk387rqrlvj20q60uydik.jpg" alt="抽象工厂模式"></p>
-<h3 id="抽象工厂模式中的角色"><a href="#抽象工厂模式中的角色" class="headerlink" title="抽象工厂模式中的角色"></a>抽象工厂模式中的角色</h3><ol>
-<li><code>AbstractProduct</code>: 抽象的产品类，用于声明产品类所持有的方法，添加对产品类的约束</li>
-<li><code>AbstractFactory</code>: 抽象的工厂类，声明了如何生成多个相关对象的方法</li>
-<li><code>ConcreteProdcut</code>:具体的产品类，实现了抽象产品类定义的方法，满足了约束</li>
-<li><code>ConcreteFactory</code>:具体的工厂类，实现了生成对象的接口，实现了不用<code>new</code>，就可以生成多个相关的对象（有多个方法）</li>
-</ol>
-<h3 id="抽象工厂模式的优点"><a href="#抽象工厂模式的优点" class="headerlink" title="抽象工厂模式的优点"></a>抽象工厂模式的优点</h3><ol>
-<li>封装性</li>
-<li>产品族内的约束非公开</li>
-<li>类的数量比起工厂方法模式来说，大大减少</li>
-</ol>
-<h3 id="抽象工厂模式的缺点"><a href="#抽象工厂模式的缺点" class="headerlink" title="抽象工厂模式的缺点"></a>抽象工厂模式的缺点</h3><p>抽象工厂模式非常难以扩展产品类，因为修改产品类，会修改大量原有类，这样违背了开闭原则，不是一个很好的设计。</p>
-<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><p>一个对象族（或是一组没有任何关系的对象）都有相同的约束，则可以使用抽象工厂模式。</p>
-<h3 id="与工厂方法模式的区别"><a href="#与工厂方法模式的区别" class="headerlink" title="与工厂方法模式的区别"></a>与工厂方法模式的区别</h3><p>对比与工厂方法模式，不同于它对每个产品都一个工厂类，抽象工厂模式把多个相关的对象的生成放到一个类中。</p>
-<h3 id="为什么要使用抽象工厂模式"><a href="#为什么要使用抽象工厂模式" class="headerlink" title="为什么要使用抽象工厂模式"></a>为什么要使用抽象工厂模式</h3><p>其实在写第二节的（如何工作）的时候，我看着类图，就有一个疑问，为什么要使用抽象工厂模式，使用工厂方法模式也可以啊，而且也很完美，把生成多个对象的工作放到一个类中，也没有什么必然的联系，其中的函数也没有互相的依赖。<br>我查了一些资料，看到知乎上一个回答解决了我的问题，如果使用工厂方法模式，大量的产品就会带来大量的工厂类，这种设计不是很好，会使代码很复杂，抽象工厂模式，减少了工厂类的数量，把相关的或者相互依赖的类用一个工厂来生成。<br>那么为什么是相关的类放到一个工厂类里面呢？我猜是因为相关的类往往在一起实例化，这样可以直接实例化一个工厂类就可以了，免得又出现实例化大量工厂类的痛苦。<br>但是上面的解释并没有解决什么刚需（痛点），继续思考，如果是相互依赖，或者有某些关系，某些约束的类（产品），需要实例化，那么在工厂类中，很容易实现某种约束，或者某种关系。那么也就是，把相关的对象放到一个工厂类中实现，便于实现依赖。</p>
-<p>这样一想，抽象工厂还是必要的。</p>
-<p>但是，人吧，想着想着就容易瞎想，想多，我就又琢磨，那为什么要用工厂模式呢？<br>下面是想的结果：</p>
-<h3 id="为什么要用工厂模式"><a href="#为什么要用工厂模式" class="headerlink" title="为什么要用工厂模式"></a>为什么要用工厂模式</h3><p>工厂模式其实包含简单工厂模式，工厂方法模式和抽象工厂模式，这里我们统称为工厂模式<br>我自己也琢磨不明白，下面就粘一下我觉得讲的很好的一个知乎答案：</p>
-<p><a href="https://www.zhihu.com/question/24843188/answer/110361396" target="_blank" rel="external">知乎用户郭小成的解答</a></p>
-<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a href="https://book.douban.com/subject/26933281/" target="_blank" rel="external">图解设计模式</a><br><a href="https://book.douban.com/subject/4260618/" target="_blank" rel="external">设计模式之禅</a><br><a href="https://www.zhihu.com/question/24843188" target="_blank" rel="external">工厂设计模式有什么用？</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2019,7 +2010,7 @@ J = F^2  = B^3^2   = A^^3^2
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
