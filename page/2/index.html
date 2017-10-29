@@ -229,6 +229,189 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/19/design-pattern-9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ningge">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="凝戈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/19/design-pattern-9/" itemprop="url">Pattern 9. Bridge模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-19T22:20:18+08:00">
+                2017-10-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式学习/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
+<p>Decouple an abstraction from its implementation so that the two can vary independently.</p>
+</blockquote>
+<p>桥接模式就是将抽象和实现解耦，使两者可以自由的变化而不相互影响 </p>
+<h3 id="如何工作"><a href="#如何工作" class="headerlink" title="如何工作"></a>如何工作</h3><p>桥接模式，也就是桥梁模式，通过组合的方式，使抽象和实现解耦。具体的来说，就是通过将继承关系转为关联关系，从而降低了类与类之间的耦合。减少了代码编写量。</p>
+<p>说了很多，具体还是看一段代码吧</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//抽象类</span></div><div class="line"><span class="comment">//抽象层次中的最顶层类</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Abstraction</span> </span>&#123;</div><div class="line">    <span class="comment">//存储实现类对象，由抽象类存储的对象成为</span></div><div class="line">    <span class="comment">//抽象层次和实现层次连接的桥梁</span></div><div class="line">    <span class="keyword">protected</span> Implementor __implementor = <span class="keyword">null</span>;</div><div class="line">    </div><div class="line">    <span class="comment">//约束子类必须实现该构造函数</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Abstraction</span> <span class="params">(Implementor implementor)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.__implementor = implementor;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">abstractLevelDo</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"abstract level do"</span>);</div><div class="line">        <span class="keyword">this</span>.__implementor.doThing1();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//实现者类</span></div><div class="line"><span class="comment">//实现层次中的最顶层的类</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Implementor</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doThing1</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doThing2</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//改良类</span></div><div class="line"><span class="comment">//抽象层次中的子类</span></div><div class="line"><span class="comment">//同时也可以是具体类</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RefinedClass</span> <span class="keyword">extends</span> <span class="title">Abstraction</span></span>&#123;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RefinedClass</span><span class="params">(Implementor implementor)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(implementor);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="comment">//改良的方法</span></div><div class="line">    <span class="comment">//相当于在抽象层次上进行了改进</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refinedClassDo</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"refined class do"</span>);</div><div class="line">        <span class="keyword">this</span>.__implementor.doThing2();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//具体实现类</span></div><div class="line"><span class="comment">//实现层次中的具体类</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteImplementor</span> <span class="keyword">implements</span> <span class="title">Implementor</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doThing1</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"implement level do thing1"</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doThing2</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"implement level do thing2"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过上面的代码我们可以看到，整个桥梁模式最核心的一点就是在抽象层次中存储实现层次的实例，通过委托来实现功能，也就是将继承关系转变为组合关系，来实现解耦。</p>
+<p>下面是桥梁模式的图示：</p>
+<p><img src="https://wx2.sinaimg.cn/mw690/e488f771gy1fknx8a1a39j20cf07dt9k.jpg" alt="B29ACE38-3DAE-4574-987F-43CB5DE29A43.png"></p>
+<h3 id="桥梁模式中的角色"><a href="#桥梁模式中的角色" class="headerlink" title="桥梁模式中的角色"></a>桥梁模式中的角色</h3><ol>
+<li>Abstraction: 抽象类，该类是抽象层次的最顶层，它存储了实现类的实例。同时使用了实现类提供的基本功能，一般该类是抽象类。</li>
+<li>RefinedAbstraction: 改善的抽象类。该类位于抽象层次，一般是对父类（抽象类）的改进。在原来的类的基础上进行改进。一般该类是具体类。</li>
+<li>Impelmentor：实现者类。该类是实现层次的最顶层。定义了用于实现Abstraction角色要使用功能的接口。一般是接口或者抽象类。</li>
+<li>ConcreteImplementor: 具体的实现者。该类负责实现Implementor定义的方法。</li>
+</ol>
+<h3 id="我理解的桥梁模式"><a href="#我理解的桥梁模式" class="headerlink" title="我理解的桥梁模式"></a>我理解的桥梁模式</h3><p>我觉得《图说设计模式》中，开头讲的一段话很好，现在分享给大家：</p>
+<blockquote>
+<p>设想如果要绘制矩形、圆形、椭圆、正方形，我们至少需要4个形状类，但是如果绘制的图形需要具有不同的颜色，如红色、绿色、蓝色等，此时至少有如下两种设计方案：</p>
+<ul>
+<li>第一种设计方案是为每一种形状都提供一套各种颜色的版本。</li>
+<li>第二种设计方案是根据实际需要对形状和颜色进行组合</li>
+</ul>
+<p>对于有两个变化维度（即两个变化的原因）的系统，采用方案二来进行设计系统中类的个数更少，且系统扩展更为方便。设计方案二即是桥接模式的应用。桥接模式将继承关系转换为关联关系，从而降低了类与类之间的耦合，减少了代码编写量。</p>
+</blockquote>
+<p>上面的话就是桥梁模式的动机，当系统出现了两个变化维度时，如果我们只使用继承的方法，就会产生大量的子类，如上面的例子，就要有3*4=12个实现类，但如果使用第二种方法我们仅显示7个类就可以了，之后就可以随意组合，极大的减少了类的数量。<br>实际上，因为变化有两个维度，我们利用组合的方式代替了继承，就使类的变化从两个层次进行，暗暗的对应了系统变化的两个层次（一个层次对应一种维度的变化）</p>
+<h3 id="桥梁模式的优点"><a href="#桥梁模式的优点" class="headerlink" title="桥梁模式的优点"></a>桥梁模式的优点</h3><ol>
+<li>实现与抽象分离<br> 这没什么好说的，就是桥梁模式的定义</li>
+<li>扩展性好<br> 无论是在实现层次还是在抽象层次进行扩展，都非常简单，直接在相应的层次增加实现类就可以了.</li>
+<li>实现细节对客户端透明</li>
+</ol>
+<h3 id="桥梁模式的缺点"><a href="#桥梁模式的缺点" class="headerlink" title="桥梁模式的缺点"></a>桥梁模式的缺点</h3><ol>
+<li>增加了理解系统的难度，由于聚合关系在抽象层，理解难度比较大。</li>
+<li>桥梁模式要明确的识别出变化的两个维度，因此在使用这一模式的时候，会有一些局限性。</li>
+</ol>
+<h3 id="桥梁模式的使用场景"><a href="#桥梁模式的使用场景" class="headerlink" title="桥梁模式的使用场景"></a>桥梁模式的使用场景</h3><ol>
+<li>一个类存在两个变化的维度，且两个维度都需要扩展</li>
+<li>不适合使用继承的场景<br> 实际上就是利用组合来代替继承</li>
+<li>重用性要求比较高的场景<br> 实现的粒度越细，越容易被重用，使用继承，会受到父类的限制，很难出现太细的粒度。</li>
+</ol>
+<h3 id="桥梁模式和适配器模式"><a href="#桥梁模式和适配器模式" class="headerlink" title="桥梁模式和适配器模式"></a>桥梁模式和适配器模式</h3><p>桥梁模式和适配器模式在某种意义上是有一些相似性的，但是这两种模式更多的是出现在软件生命中的不同阶段，桥梁模式出现在前期的设计阶段，对于两个维度的变化，可以将其分到实现层次和抽象层次。而对于适配器模式，更多的是出现在后期，系统已经实现了一部分了，发现两个部分无法协同工作，使用适配器模式。</p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a href="https://book.douban.com/subject/26933281/" target="_blank" rel="external">图解设计模式</a><br><a href="https://book.douban.com/subject/4260618/" target="_blank" rel="external">设计模式之禅</a><br><a href="http://design-patterns.readthedocs.io/zh_CN/latest/structural_patterns/bridge.html#id7" target="_blank" rel="external">图说设计模式-桥接模式</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/02/design-pattern-8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1643,7 +1826,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
