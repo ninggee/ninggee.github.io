@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="design pattern," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="定义 Define a one-to-many dependency between objects so that when one object changes state,all its dependents are notified and updated automatically.  定义一个对象间的一对多的依赖关系以至于当一个对象的状态变化时，所有的依赖者都会被通知，并且自动的更新。">
+<meta name="keywords" content="design pattern">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pattern 17. Observer模式">
+<meta property="og:url" content="https://ninggee.github.io/2017/10/29/design-pattern-17/index.html">
+<meta property="og:site_name" content="凝戈">
+<meta property="og:description" content="定义 Define a one-to-many dependency between objects so that when one object changes state,all its dependents are notified and updated automatically.  定义一个对象间的一对多的依赖关系以至于当一个对象的状态变化时，所有的依赖者都会被通知，并且自动的更新。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wx4.sinaimg.cn/mw690/e488f771gy1fkzdlh5kn0j20ns0c5dhu.jpg">
+<meta property="og:updated_time" content="2017-10-29T12:13:00.836Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pattern 17. Observer模式">
+<meta name="twitter:description" content="定义 Define a one-to-many dependency between objects so that when one object changes state,all its dependents are notified and updated automatically.  定义一个对象间的一对多的依赖关系以至于当一个对象的状态变化时，所有的依赖者都会被通知，并且自动的更新。">
+<meta name="twitter:image" content="https://wx4.sinaimg.cn/mw690/e488f771gy1fkzdlh5kn0j20ns0c5dhu.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ninggee.github.io/2017/10/29/design-pattern-17/"/>
+
+
+
+
+
+  <title>Pattern 17. Observer模式 | 凝戈</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">凝戈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">making a big fortune with no voice</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/29/design-pattern-17/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ningge">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="凝戈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Pattern 17. Observer模式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-29T20:10:40+08:00">
+                2017-10-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式学习/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
+<p>Define a one-to-many dependency between objects so that when one object changes state,all its dependents are notified and updated automatically.</p>
+</blockquote>
+<p>定义一个对象间的一对多的依赖关系以至于当一个对象的状态变化时，所有的依赖者都会被通知，并且自动的更新。观察者模式也被称为订阅-发布模式。</p>
+<p>这个模式在平时用的还是比较多的，比如我们之前提到的MVC构架中的model和view之间就使用了观察者模式。下面介绍一下观察者模式是如何工作的。</p>
+<h3 id="如何工作"><a href="#如何工作" class="headerlink" title="如何工作"></a>如何工作</h3><p>对于观察者模式，或者说是订阅-发布模式，我们可以想象生活中的收音机是如何工作的。首先是有一个被观察的对象，也就是一个广播频道，其次是有一个收音机，也就是一个观察者。只要广播频道有什么新的内容，收音机都可以收到，听众就可以听到它所收听频道的内容了。<br>在设计模式中的观察者模式基本也是这样的逻辑。下面我们还是先看一段示例代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//首先是subject也就是被观察者类</span></div><div class="line"><span class="comment">//被观察者应该可以动态的添加，删除观察它的观察者</span></div><div class="line"><span class="comment">//同时，当自己的状态发生变化的时候，可以通知观察他的观察者</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Subject</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> Vector&lt;Observer&gt; observers = <span class="keyword">new</span> Vector&lt;Observer&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(Observer observer)</span> </span>&#123;</div><div class="line">        observers.add(observer);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(Observer observer)</span> </span>&#123;</div><div class="line">        observers.remove(observer);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notifyObservers</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span>(Observer observer: observers) &#123;</div><div class="line">            observer.update(<span class="keyword">this</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//具体的观察者</span></div><div class="line"><span class="comment">//在自己的状态发生变化的时候，通知所有观察者</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteSubject</span> <span class="keyword">extends</span> <span class="title">Subject</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subjectDo</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.notifyObservers();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//观察者类</span></div><div class="line"><span class="comment">//抽象的观察者</span></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Observer</span> </span>&#123;</div><div class="line">    <span class="comment">//观察者在观察到被观察者的变化时，可以对变化做出反应</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(Subject subject)</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//具体的观察者</span></div><div class="line"><span class="comment">//实现自己的对观察到的信息的处理逻辑</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteObserver</span> <span class="keyword">extends</span> <span class="title">Observer</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(Subject subject)</span> </span>&#123;</div><div class="line">        <span class="comment">// subject do something and observer recieve this message</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我的代码写的很简单，只是为了展示被观察者和观察者之间是如何通知的。<br>可以看到，被观察者可以动态的管理观察者，同时在自己的状态发生变化的时候更新观察者。因此把这几个功能单独提出来，作为观察者的抽象接口。<br>对于具体的被观察者，只要能在自己特定的时间通知观察者就可以了。<br>对于观察者，需要对观察对象的变化做出反应，每个观察者类的反应都不一样，因此update这个方法被设为抽象方法。<br>下面是观察者模式的图示：</p>
+<p><img src="https://wx4.sinaimg.cn/mw690/e488f771gy1fkzdlh5kn0j20ns0c5dhu.jpg" alt="5CD75570-8FDB-4DD3-BB64-A2CBD01CF738.png"></p>
+<h3 id="观察者模式中的角色"><a href="#观察者模式中的角色" class="headerlink" title="观察者模式中的角色"></a>观察者模式中的角色</h3><ol>
+<li>subject：被观察者，可以动态的管理自己的观察者，同时在自己状态变化的时候，通知自己的观察者。</li>
+<li>ConcreteSubject：具体的被观察者，实现自己的逻辑，在自己觉得恰当的时间通知观察者。</li>
+<li>Observer：观察者类，观察者要在收到被观察者的通知之后，进行更新。</li>
+<li>ConcreteObserver：具体的观察者，实现自己的更新逻辑。</li>
+</ol>
+<h3 id="我理解的观察者模式"><a href="#我理解的观察者模式" class="headerlink" title="我理解的观察者模式"></a>我理解的观察者模式</h3><p>观察者模式，我个人觉得不太恰当，还是订阅-发布模式比较恰当，将那种某一线程一直观察一个对象的模式，转变成被观察的对象变化了之后，主动通知观察者，提高了效率和性能。</p>
+<h3 id="观察者模式的优点"><a href="#观察者模式的优点" class="headerlink" title="观察者模式的优点"></a>观察者模式的优点</h3><ol>
+<li>观察者模式在观察者和被观察者之间建立了一种抽象耦合关系。</li>
+<li>避免了一直观察一个对象的状态变化带来的性能开销</li>
+</ol>
+<h3 id="观察者模式的缺点"><a href="#观察者模式的缺点" class="headerlink" title="观察者模式的缺点"></a>观察者模式的缺点</h3><ol>
+<li>当一个被观察者有多个观察者的时候，在开发和调试的时候会比较麻烦，通知的过程会变得很长，影响性能。</li>
+<li>当一个观察者观察多个对象的时候，可能会对某个函数返回特别慢，影响整体的性能。解决方式是异步。</li>
+</ol>
+<h3 id="观察者模式的应用场景"><a href="#观察者模式的应用场景" class="headerlink" title="观察者模式的应用场景"></a>观察者模式的应用场景</h3><ol>
+<li>一个对象变化，会影响多个对象的状态，同时不知道有哪些对象会变化的时候。</li>
+<li>编程中的一对多的情况，基本都可以利用观察者模式。</li>
+</ol>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a href="https://book.douban.com/subject/26933281/" target="_blank" rel="external">图解设计模式</a><br><a href="https://book.douban.com/subject/4260618/" target="_blank" rel="external">设计模式之禅</a><br><a href="https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/observer.html" target="_blank" rel="external">图说设计模式-观察者模式</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/design-pattern/" rel="tag"># design pattern</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/29/design-pattern-16/" rel="next" title="Pattern 16. Mediator模式">
+                <i class="fa fa-chevron-left"></i> Pattern 16. Mediator模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <p class="site-author-name" itemprop="name">ningge</p>
+            <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何工作"><span class="nav-number">2.</span> <span class="nav-text">如何工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#观察者模式中的角色"><span class="nav-number">3.</span> <span class="nav-text">观察者模式中的角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#我理解的观察者模式"><span class="nav-number">4.</span> <span class="nav-text">我理解的观察者模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#观察者模式的优点"><span class="nav-number">5.</span> <span class="nav-text">观察者模式的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#观察者模式的缺点"><span class="nav-number">6.</span> <span class="nav-text">观察者模式的缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#观察者模式的应用场景"><span class="nav-number">7.</span> <span class="nav-text">观察者模式的应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献"><span class="nav-number">8.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ningge</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" count="50" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
