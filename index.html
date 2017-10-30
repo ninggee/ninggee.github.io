@@ -229,6 +229,181 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/30/design-pattern-19/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ningge">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="凝戈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/30/design-pattern-19/" itemprop="url">Pattern 19. State模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-30T13:49:54+08:00">
+                2017-10-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式学习/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
+<p>Allow an object to alter its behavior when its internal state changes.The object will appear to change its class.</p>
+</blockquote>
+<p>状态模式，允许一个对象随着他的内部状态的变化改变其行为，就好像换了一个类一样。<br>状态模式的核心是封装，状态的变更引起了行为的变化，从外部看起来就好像这个对象对应的类发生了改变一样。下面来看状态模式是如何工作的</p>
+<h3 id="如何工作"><a href="#如何工作" class="headerlink" title="如何工作"></a>如何工作</h3><p>考虑状态模式是如何工作的，就要先知道为什么出现状态模式，那么为什么状态模式会出现呢？<br>原因很简单，是因为在项目中有很多时候，一个类的行为会随着他的状态发生变化而变化，我们正常的想法是放很多的条件判断，判断当前的状态来确定行为，但是这样的方法多了以后，就会出现大量的条件语句块。对扩展性影响极大。为了解决这类问题，状态模式就应运而生了。<br>状态模式的重点是通过类来描述状态，一个类代表一种状态，那么为了提取状态类。我们就要知道一个对象有哪些随状态变化而变化的行为，找到这些行为，提取他们形成单独的状态类，就是状态模式最为核心的点。下面来看示例代码吧。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//state类状态类</span></div><div class="line"><span class="comment">//状态类定义自己的抽象方法，同时保存环境变量来实现状态的转换</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">State</span> </span>&#123;</div><div class="line">    <span class="keyword">protected</span> Context __context;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set_context</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        __context = context;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//状态类定义的根据状态变化而行为不同的方法</span></div><div class="line">    <span class="comment">//一般和环境类中的方法对应</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">method2</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//具体的状态类</span></div><div class="line"><span class="comment">//每个状态类都有两个任务</span></div><div class="line"><span class="comment">//一个是在自己状态下自己特有的行为</span></div><div class="line"><span class="comment">//另一个是行为发生后，利用环境类改变环境类的状态</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteState1</span> <span class="keyword">extends</span> <span class="title">State</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">()</span> </span>&#123;</div><div class="line">       System.out.println(<span class="string">"state 1 do method1"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method2</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.__context.setCurrentState(Context.state2);</div><div class="line">        __context.method2();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteState2</span> <span class="keyword">extends</span> <span class="title">State</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">()</span> </span>&#123;</div><div class="line">        __context.setCurrentState(Context.state1);</div><div class="line">        __context.method1();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method2</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"state2 do method2"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//环境类</span></div><div class="line"><span class="comment">//环境类负责定义对外暴露的接口</span></div><div class="line"><span class="comment">//这些接口基本和状态类中的方法对应，因为都是随状态变化行为不同的方法</span></div><div class="line"><span class="comment">//除此之外还要提供改变环境类状态的方法。</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Context</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> State state1 = <span class="keyword">new</span> ConcreteState1();</div><div class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> State state2 = <span class="keyword">new</span> ConcreteState2();</div><div class="line"></div><div class="line">    <span class="keyword">private</span> State currentState ;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCurrentState</span><span class="params">(State currentState)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.currentState = currentState;</div><div class="line">        <span class="keyword">this</span>.currentState.set_context(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> State <span class="title">getCurrentState</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> currentState;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.currentState.method1();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method2</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.currentState.method2();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>代码示例看起来有一点绕，但是我们搞清楚各个角色的任务之后，就会发现这些代码正是状态模式应有的模样。<br>我们要注意两点，是状态模式在实现的时候约定俗成的规则：</p>
+<ul>
+<li>把环境类的所有可能的状态列为类的静态常量</li>
+<li>环境角色有状态类的所有的随状态变化而变化的方法，在方法内使用委托来调用具体的状态类的方法。</li>
+</ul>
+<p>下面是状态模式的图示：</p>
+<p><img src="http://wx1.sinaimg.cn/mw690/e488f771gy1fl0875bch5j20d608uq3o.jpg" alt="C9223BBF-336F-47A2-BD65-EA4F74FEC83D.png"></p>
+<h3 id="状态模式中的角色"><a href="#状态模式中的角色" class="headerlink" title="状态模式中的角色"></a>状态模式中的角色</h3><ol>
+<li><code>context</code>：环境类负责定义对外暴露的接口，这些接口基本和状态类中的方法对应，因为都是随状态变化行为不同的方法，除此之外还要提供改变环境类状态的方法。</li>
+<li><code>State</code>：抽象的状态类，定义自己的抽象方法，同时保存环境变量来实现状态的转换</li>
+<li><code>ConcreteState</code>: 具体的状态类,每个状态类都有两个任务,一个是在自己状态下自己特有的行为,另一个是行为发生后，利用环境类改变环境类的状态.</li>
+</ol>
+<h3 id="我理解的状态模式"><a href="#我理解的状态模式" class="headerlink" title="我理解的状态模式"></a>我理解的状态模式</h3><p>我个人认为，状态模式是为了解决那些因为状态不同而行为不同，却使用条件语句来判断状态的问题，状态模式的重点是提取出那些随状态变化的方法，作为抽象类 。</p>
+<h3 id="状态模式的优点"><a href="#状态模式的优点" class="headerlink" title="状态模式的优点"></a>状态模式的优点</h3><ol>
+<li>结构清晰， 避免了使用大量的条件语句判断状态</li>
+<li>将随状态变化的行为封装到一个类中，便于扩展</li>
+<li>封装了状态转换的规则，封装性好</li>
+</ol>
+<h3 id="状态模式的缺点"><a href="#状态模式的缺点" class="headerlink" title="状态模式的缺点"></a>状态模式的缺点</h3><ol>
+<li>可能会导致类的数量膨胀</li>
+<li>实现结构较为复杂，看代码的时候，确实觉得比较难理解</li>
+<li>增加一个类，可能会修改大量已有的类来添加转化规则。</li>
+</ol>
+<h3 id="状态模式的应用场景"><a href="#状态模式的应用场景" class="headerlink" title="状态模式的应用场景"></a>状态模式的应用场景</h3><ol>
+<li>系统中有大量随状态变化而变化的方法</li>
+<li>系统中存在大量重复的条件判断语句</li>
+</ol>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a href="https://book.douban.com/subject/26933281/" target="_blank" rel="external">图解设计模式</a><br><a href="https://book.douban.com/subject/4260618/" target="_blank" rel="external">设计模式之禅</a><br><a href="https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/state.html" target="_blank" rel="external">图说设计模式-状态模式</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/30/design-pattern-18/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1777,173 +1952,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/19/git-knowledge-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ningge">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="凝戈">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/19/git-knowledge-1/" itemprop="url">Git中HEAD^与HEAD~的区别</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-19T23:23:38+08:00">
-                2017-10-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Git学习/" itemprop="url" rel="index">
-                    <span itemprop="name">Git学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在学习Git的过程中，有点<code>^</code>和<code>~</code>这两个符号有点迷茫。通过在StackOverFlow上查找答案，终于明白了两者的区别：</p>
-<ol>
-<li>^：是回退到父元素，当父元素有多个的时候，^{n}指定第几个父亲，比如HEAD^等价于HEAD^1指向第一个父提交，同理HEAD^2指向第二个</li>
-<li>~:指的是在继承层次上的回退，比如HEAD~2指定的是在继承层级上回退两层</li>
-</ol>
-<p><a href="http://www.kernel.org/pub/software/scm/git/docs/git-rev-parse.html" target="_blank" rel="external">官方文档</a>上有个图很形象，我就直接粘过来吧</p>
-<pre><code>G   H   I   J
- \ /     \ /
-  D   E   F
-   \  |  / \
-    \ | /   |
-     \|/    |
-      B     C
-       \   /
-        \ /
-         A
-A =      = A^0
-B = A^   = A^1     = A~1
-C = A^2  = A^2
-D = A^^  = A^1^1   = A~2
-E = B^2  = A^^2
-F = B^3  = A^^3
-G = A^^^ = A^1^1^1 = A~3
-H = D^2  = B^^2    = A^^^2  = A~2^2
-I = F^   = B^3^    = A^^3^
-J = F^2  = B^3^2   = A^^3^2
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1993,7 +2001,7 @@ J = F^2  = B^3^2   = A^^3^2
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
