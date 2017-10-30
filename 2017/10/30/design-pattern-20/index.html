@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="design pattern," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="定义 Use sharing to support large numbers of fine-grained objects efficiently.  使用共享来高效的生成大量细粒度对象。由于享元模式要求共享的对象是细粒度的对象，因此享元模式又被称为轻量级模式。 享元模式只使用少量对象，这些对象很相似，状态变化很小，可以使用复用。 如何工作要想明白如何使用享元模式，就先要理解两个概念：  在享">
+<meta name="keywords" content="design pattern">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pattern 20. Flyweight模式">
+<meta property="og:url" content="https://ninggee.github.io/2017/10/30/design-pattern-20/index.html">
+<meta property="og:site_name" content="凝戈">
+<meta property="og:description" content="定义 Use sharing to support large numbers of fine-grained objects efficiently.  使用共享来高效的生成大量细粒度对象。由于享元模式要求共享的对象是细粒度的对象，因此享元模式又被称为轻量级模式。 享元模式只使用少量对象，这些对象很相似，状态变化很小，可以使用复用。 如何工作要想明白如何使用享元模式，就先要理解两个概念：  在享">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/e488f771gy1fl0h4sbcc2j20q811k0wn.jpg">
+<meta property="og:updated_time" content="2017-10-30T11:01:18.711Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pattern 20. Flyweight模式">
+<meta name="twitter:description" content="定义 Use sharing to support large numbers of fine-grained objects efficiently.  使用共享来高效的生成大量细粒度对象。由于享元模式要求共享的对象是细粒度的对象，因此享元模式又被称为轻量级模式。 享元模式只使用少量对象，这些对象很相似，状态变化很小，可以使用复用。 如何工作要想明白如何使用享元模式，就先要理解两个概念：  在享">
+<meta name="twitter:image" content="https://wx1.sinaimg.cn/mw690/e488f771gy1fl0h4sbcc2j20q811k0wn.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://ninggee.github.io/2017/10/30/design-pattern-20/"/>
+
+
+
+
+
+  <title>Pattern 20. Flyweight模式 | 凝戈</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">凝戈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">making a big fortune with no voice</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/30/design-pattern-20/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ningge">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="凝戈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Pattern 20. Flyweight模式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-30T18:57:48+08:00">
+                2017-10-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式学习/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
+<p>Use sharing to support large numbers of fine-grained objects efficiently.</p>
+</blockquote>
+<p>使用共享来高效的生成大量细粒度对象。<br>由于享元模式要求共享的对象是细粒度的对象，因此享元模式又被称为轻量级模式。</p>
+<p>享元模式只使用少量对象，这些对象很相似，状态变化很小，可以使用复用。</p>
+<h3 id="如何工作"><a href="#如何工作" class="headerlink" title="如何工作"></a>如何工作</h3><p>要想明白如何使用享元模式，就先要理解两个概念：</p>
+<ul>
+<li>在享元模式中可以共享的相同内容称为内部状态（intrinsic），存储在享元对象内部并且不会随环境改变而改变</li>
+<li>需要外部环境来设置的不能共享的内容称为外部状态(extrinsic）</li>
+</ul>
+<p>通过上面的概念我们可以知道，如果我们想要共享对象，肯定共享的是不会变化的那些，因为变化的那些每次都会变，肯定会创建新的。因此，我们就知道，要想实现享元模式，就一定要把不变的东西抽离出来，进行共享。下面来看一段代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//flyweight类</span></div><div class="line"><span class="comment">//flyweight类表示实例会被共享的类</span></div><div class="line"><span class="comment">//需要定义出自己的方法，以及内部状态和外部状态信息</span></div><div class="line"><span class="keyword">public</span>  <span class="class"><span class="keyword">class</span> <span class="title">Flyweight</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> String instrinsic;</div><div class="line">    <span class="keyword">protected</span> <span class="keyword">final</span> String extrinsic;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Flyweight</span><span class="params">(String extrinsic)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.extrinsic = extrinsic;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getInstrinsic</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> instrinsic;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setInstrinsic</span><span class="params">(String instrinsic)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.instrinsic = instrinsic;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"do something"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//flyweight工厂类</span></div><div class="line"><span class="comment">//flyweight工厂负责生产flyweight对象</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FlyweightFactory</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> HashMap&lt;String, Flyweight&gt; pool = <span class="keyword">new</span> HashMap&lt;String, Flyweight&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Flyweight <span class="title">getFlyweight</span><span class="params">(String key)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(pool.containsKey(key)) &#123;</div><div class="line">            <span class="keyword">return</span> pool.get(key);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            Flyweight flyweight = <span class="keyword">new</span> Flyweight(key);</div><div class="line">            pool.put(key, flyweight);</div><div class="line"></div><div class="line">            <span class="keyword">return</span> flyweight;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我上面的实例代码比较简单，但基本展示了享元模式的原理。<br>需要注意的是，在<code>Flyweight</code>类中，要区分出内部状态和外部状态，使之可以分别设置和获取，同时可以看到，外部状态被设置为<code>final</code>，这保证了共享是，一个类的外部装填不会被改变。如果可以改变的话，那就会是程序最终的结果出现错误。<br>另外一点是在<code>FlyweightFactory</code>类中，<code>getFlyweight</code>方法，是利用一个<code>HashMap</code>作为缓冲池，那就要注意一点，对于<code>key</code>，如果要是自己定义的类，一定要覆写<code>hasCode</code>方法，否则会出现问题。</p>
+<p>下面是享元模式的图示：</p>
+<p><img src="https://wx1.sinaimg.cn/mw690/e488f771gy1fl0h4sbcc2j20q811k0wn.jpg" alt="3230BE3C-AE6B-4C3A-A358-D922FC89E84A.png"></p>
+<h3 id="享元模式中的角色"><a href="#享元模式中的角色" class="headerlink" title="享元模式中的角色"></a>享元模式中的角色</h3><ol>
+<li><code>Flyweight</code>：实例可以共享的类。注意在类中区分内部状态和外部状态。</li>
+<li><code>FlyweightFactory</code>：负责生成<code>Flyweight</code>的类。利用缓冲池储存可共享变量。</li>
+</ol>
+<h3 id="我理解的享元模式"><a href="#我理解的享元模式" class="headerlink" title="我理解的享元模式"></a>我理解的享元模式</h3><p>享元模式主要是为了解决那种系统中可能会出现的数量巨大的只是有微小区别的对象导致的内存占用极高的问题，通过将不变的部分提取出来，并放在缓冲池共享，保证对象的数量很少。</p>
+<h3 id="享元模式的优点"><a href="#享元模式的优点" class="headerlink" title="享元模式的优点"></a>享元模式的优点</h3><ol>
+<li>减少内存中的对象的数量。</li>
+<li>Flyweight类中的外部状态和内部状态相互独立，不会相互响应，可以很容易得在各处被共享。</li>
+</ol>
+<h3 id="享元模式的缺点"><a href="#享元模式的缺点" class="headerlink" title="享元模式的缺点"></a>享元模式的缺点</h3><ol>
+<li>使系统变得很复杂，逻辑实现也比较复杂。</li>
+</ol>
+<h3 id="享元模式的应用场景"><a href="#享元模式的应用场景" class="headerlink" title="享元模式的应用场景"></a>享元模式的应用场景</h3><ol>
+<li>一个系统中有大量的某个类的对象时。</li>
+<li>一个类中的状态都可以外部话，可以从外部传入。</li>
+<li>需要缓冲池的时候。</li>
+</ol>
+<h3 id="享元模式注意的问题"><a href="#享元模式注意的问题" class="headerlink" title="享元模式注意的问题"></a>享元模式注意的问题</h3><ol>
+<li>线程安全问题。不同的线程可能会修改同一对象。</li>
+<li>性能问题，将内部信息单独抽象成类，可能会带来额外的性能开销。</li>
+</ol>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a href="https://book.douban.com/subject/26933281/" target="_blank" rel="external">图解设计模式</a><br><a href="https://book.douban.com/subject/4260618/" target="_blank" rel="external">设计模式之禅</a><br><a href="https://design-patterns.readthedocs.io/zh_CN/latest/structural_patterns/flyweight.html" target="_blank" rel="external">图说设计模式-享元模式</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/design-pattern/" rel="tag"># design pattern</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/30/design-pattern-19/" rel="next" title="Pattern 19. State模式">
+                <i class="fa fa-chevron-left"></i> Pattern 19. State模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <p class="site-author-name" itemprop="name">ningge</p>
+            <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何工作"><span class="nav-number">2.</span> <span class="nav-text">如何工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#享元模式中的角色"><span class="nav-number">3.</span> <span class="nav-text">享元模式中的角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#我理解的享元模式"><span class="nav-number">4.</span> <span class="nav-text">我理解的享元模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#享元模式的优点"><span class="nav-number">5.</span> <span class="nav-text">享元模式的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#享元模式的缺点"><span class="nav-number">6.</span> <span class="nav-text">享元模式的缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#享元模式的应用场景"><span class="nav-number">7.</span> <span class="nav-text">享元模式的应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#享元模式注意的问题"><span class="nav-number">8.</span> <span class="nav-text">享元模式注意的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献"><span class="nav-number">9.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ningge</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" count="50" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+</html>
