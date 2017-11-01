@@ -229,6 +229,183 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/27/design-pattern-11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ningge">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="凝戈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/27/design-pattern-11/" itemprop="url">Pattern 11.  Strategy模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-27T23:51:00+08:00">
+                2017-10-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式学习/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
+<p>Define a family of algorithms,encapsulate each one,and make them interchangeable.</p>
+</blockquote>
+<p>定义一组算法，封装他们，同时使他们可以相互替换</p>
+<p>策略模式听起来比较高大上，但是实际上来说，是一个比较简单的模式。可以说就是对封装和多态的综合应用。下面来看策略模式是如何工作的。</p>
+<h3 id="如何工作"><a href="#如何工作" class="headerlink" title="如何工作"></a>如何工作</h3><p>根据策略模式的定义我们可以看出，策略模式的重点是封装和可替换，我们就可以肯直接的想到抽象出一个通用的接口，来面向接口进行编程，这样就实现了可替换，如果还有一些数据需要封装，那就用抽象类来封装。这也正式策略模式所使用的方法。</p>
+<p>但是策略模式还是有一点需要注意的，那就是在策略模式中有一个<code>Context</code>角色，这个角色用来隔离客户端对具体策略的访问，同时封装了可能的变化。说了这么多，感觉都有点晕了，还是看一段代码比较直接。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//抽象策略类</span></div><div class="line"><span class="comment">//如果只有方法的话，也可以用接口</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Strategy</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">starategyDo</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//具体的策略类</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Strategy1</span> <span class="keyword">extends</span> <span class="title">Strategy</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">strategyDo</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"strategy1 do"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Strategy2</span> <span class="keyword">extends</span> <span class="title">Strategy</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">strategyDo</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"strategy2 do"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//context类</span></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Context</span></span>&#123;</div><div class="line">    <span class="comment">//储存strategy对象</span></div><div class="line">    <span class="comment">//对象不同，策略不同</span></div><div class="line">    <span class="keyword">private</span> Strategy __strategy;</div><div class="line">    </div><div class="line">    <span class="comment">//可以动态设置要使用的策略</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setStrategy</span><span class="params">(Strategy strategy)</span> </span>&#123;</div><div class="line">        __strategy = strategy;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//context对外提供的功能</span></div><div class="line">    <span class="comment">//一般来说和strategy提供的接口不同</span></div><div class="line">    <span class="comment">//不然就是代理了</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextDo</span><span class="params">()</span> </span>&#123;</div><div class="line">        __strategy.strategyDo();</div><div class="line">        System.out.println(<span class="string">"context do"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到，整个策略模式的表示代码是比较简单的，策略模式也确实是一个比较简单的模式。<br>面向对象编程的重点就是抽象和封装，提取共同点作为抽象父类（接口），在子类中各自体现自己的不同。对于一项工作又不同的方法去解决他，那么共同点就是解决这个问题，不同就是方法不同，我们可以看到，策略类就是这样。<br>关于<code>context</code>类，这个类比较有意思，它将策略和客户端代码隔离，这样客户端不关心具体用的什么策略，只要问题解决就可以了，同时，在解决客户端的需求时，可能只有一部分是有多种策略的，这样，其他部分可以放到 <code>context</code>类中，这样也算是将变化封装在这个类中。<br>下面是策略模式的图示：</p>
+<p><img src="http://wx2.sinaimg.cn/mw690/e488f771ly1fkx8yav1r9j20p00e6gnt.jpg" alt="D41D3DFA-6452-4AF6-BA53-B08FDADEB87D.png"></p>
+<h3 id="策略模式中的角色"><a href="#策略模式中的角色" class="headerlink" title="策略模式中的角色"></a>策略模式中的角色</h3><ol>
+<li><code>strategy</code>: 策略和算法的抽象类或者接口，定义了算法提供的功能。</li>
+<li><code>ConcreteStrategy</code>: 具体的策略类，实现了<code>strategy</code>定义的接口</li>
+<li><code>context</code>:隔离了客户端与策略族，也可以封装一些可能的变化</li>
+</ol>
+<h3 id="我理解的策略模式"><a href="#我理解的策略模式" class="headerlink" title="我理解的策略模式"></a>我理解的策略模式</h3><p>策略模式整体来说是个比较简单的模式，看来是策略类比价重要，但是在我看来，<code>context</code>类才是这个模式的灵魂。<br>对于策略类来说，只是抽象了公共的接口，同时使用继承和多态的特性实现了策略的替换，这个对于有多种可能的策略，我们是横容易想到使用抽象和继承等方式来实现的。<br>但是对于<code>context</code>类，它是一个比较重要的类，</p>
+<ul>
+<li>一方面它隔离了客户端与策略类，这要求它了解有哪些策略类，同时了解客户端所需要的功能</li>
+<li>另一方面，当有一些变化的时候，比如除了策略类提供的接口还需要一些其他的操作才能完成最终的需求的时候，就需要在<code>context</code>类中进行一些操作了</li>
+</ul>
+<p>因此在策略模式中，<code>context</code>类是最为关键的</p>
+<h3 id="策略模式的优点"><a href="#策略模式的优点" class="headerlink" title="策略模式的优点"></a>策略模式的优点</h3><ol>
+<li>可以灵活的切换算法，而不需要修改原有系统</li>
+<li>扩展性好，添加一个策略不会对原有的系统带来什么修改</li>
+<li>可以避免使用多种条件判断，减少了系统的复杂性</li>
+</ol>
+<h3 id="策略模式的缺点"><a href="#策略模式的缺点" class="headerlink" title="策略模式的缺点"></a>策略模式的缺点</h3><ol>
+<li><code>context</code>类必须知道所有的策略类，违背迪米亚特法则</li>
+<li>会产生很多的策略类，增加了类的数量</li>
+</ol>
+<h3 id="策略模式的使用场景"><a href="#策略模式的使用场景" class="headerlink" title="策略模式的使用场景"></a>策略模式的使用场景</h3><ol>
+<li>多个对象只是在行为上有不同，可以使用策略模式动态的选择哪个行为</li>
+<li>程序要在多个算法之间切换</li>
+<li>不希望暴露算法细节，可以使用策略类封装算法</li>
+</ol>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a href="https://book.douban.com/subject/26933281/" target="_blank" rel="external">图解设计模式</a><br><a href="https://book.douban.com/subject/4260618/" target="_blank" rel="external">设计模式之禅</a><br><a href="https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/strategy.html" target="_blank" rel="external">图说设计模式-策略模式</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/24/design-pattern-10/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1785,186 +1962,6 @@ J = F^2  = B^3^2   = A^^3^2
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/01/design-pattern-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ningge">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="凝戈">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/01/design-pattern-2/" itemprop="url">Pattern 2. Adapter模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-01T01:00:38+08:00">
-                2017-10-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式学习/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>Adapter模式，也就是适配器模式，也有人把它称为wrapper模式。<br>其定义为：</p>
-<blockquote>
-<p>Convert the interface of a class into another interface clients expect.Adapter lets classes work together that couldn’t otherwise because of incompatible interfaces.</p>
-</blockquote>
-<p>实际上就是把现有的一个类的接口转换成另一个客户端想要的接口。使两个不兼容的接口能够一起工作。</p>
-<h4 id="如何工作"><a href="#如何工作" class="headerlink" title="如何工作"></a>如何工作</h4><p>根据定义，我们可以看出，实际在适配器器模式中，主要涉及两个接口（类），因为，我们实现的适配器类就要能够同时访问这两个接口（类），一般来说，对于要实现的目标接口，我们的适配器类简单的声明实现这个接口就好，但是对于已经存在的另一个接口（类），我们访问他的方式就有两种了，而这两种，也适配器模式也正因为分为两种：</p>
-<ul>
-<li>类适配器模式（使用继承的适配器）</li>
-<li>对象适配器模式（使用委托的适配器）</li>
-</ul>
-<p>下面就这两种模式进行简单的介绍：</p>
-<ol>
-<li>类适配器模式<br>类适配器模式通过继承原有的接口实现类来实现对原有接口的访问，通过下面的代码来简单的表示一下：</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//原有的接口</span></div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">OldInterface</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">oldDo</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//要实现的接口</span></div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">NewInterface</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">newDo</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//实现了原有接口的类</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">OldClass</span> <span class="keyword">implements</span> <span class="title">OldInterface</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">oldDo</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">// old do </span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//适配器类</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AdapterClass</span> <span class="keyword">extends</span> <span class="title">OldClass</span> <span class="keyword">implements</span> <span class="title">NewInterface</span> </span>&#123;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">newDo</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.oldDo();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>  可以看到，我们的适配器，通过继承原有的实现类，实现了对原有的接口方法的访问，且因为实现（implements）了新的接口，也达到了将旧的接口转换到新的接口的目的。</p>
-<p>  如下是类适配器模式的图示：</p>
-<p><img src="https://wx2.sinaimg.cn/mw690/e488f771ly1fk22ztyg8pj21180es418.jpg" alt="class adapter"></p>
-<ol>
-<li>对象适配器模式<br>如果说类适配器模式是通过继承来实现对原有类的访问，那么对象适配器模式就是通过存储一个原有累的对象实例来实现对原有类的访问了，这种通过把任务交由别的类的对象完成的方法，也被称为委托，因此，对象适配器模式，也被称为<strong>使用委托的适配器</strong><br>如下图的代码表示：</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//使用上面声明和定义的类</span></div><div class="line"><span class="comment">//仅使用委托的方式实现新的是适配器类</span></div><div class="line"></div><div class="line"><span class="comment">//使用对象适配器模式实现的适配器</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Adapter</span> <span class="keyword">implements</span> <span class="title">NewInterface</span> </span>&#123;</div><div class="line">  <span class="keyword">private</span> OldClass oldClass = <span class="keyword">null</span>;</div><div class="line">  <span class="comment">//构造函数存储旧的类的对象</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">Adapter</span><span class="params">(OldClass oldClass)</span> </span>&#123;</div><div class="line">   <span class="keyword">this</span>.oldClass = oldClass; </div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">//实现的新的接口定义的方法</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">newDO</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">this</span>.oldClass.oldDo();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可以看到，与继承原有类的方式不同的是，使用委托的适配器直接存储原有类对象，把新的接口要完成的任务交给原有的类，实现了把旧的类转换成新的接口的目的。</p>
-<p>如下是对象适配器的图示：</p>
-<p><img src="https://wx2.sinaimg.cn/mw690/e488f771ly1fk22ztvx3lj21000f0wh6.jpg" alt="object adapter"></p>
-<h4 id="适配器模式中的角色简介"><a href="#适配器模式中的角色简介" class="headerlink" title="适配器模式中的角色简介"></a>适配器模式中的角色简介</h4><p>可以看到，无论是类适配器的图示还是对象适配器的图示，除了<code>client</code>外都包含三个角色，他们分别是：</p>
-<ul>
-<li><code>Adaptee</code>:被适配的类，也就是在已经存在的旧的类，是我们要转换的类</li>
-<li><code>Adapter</code>:适配器类，由它来实现将旧的类转换成新的接口的操作</li>
-<li><code>Target</code>:目标类，定义了我们要转换到的接口</li>
-</ul>
-<h4 id="适配器模式的优点"><a href="#适配器模式的优点" class="headerlink" title="适配器模式的优点"></a>适配器模式的优点</h4><ol>
-<li>使两个没有关系的类在一起使用</li>
-<li>增加了类的透明性<br>我们在使用的时候，只知道新的类，不知道其实工作主要是旧的类在做</li>
-<li>增加了类的复用性</li>
-<li>灵活性好<br>当我们不需要适配器了，直接删掉就好，其他的代码都不用修改，十分灵活</li>
-</ol>
-<h4 id="为什么要用适配器模式"><a href="#为什么要用适配器模式" class="headerlink" title="为什么要用适配器模式"></a>为什么要用适配器模式</h4><p>  可以说，适配器模式是一种补救模式，是为了解决接口之间的不相容问题，如果在一开始，整个系统被设计的很好，是不应该使用这个模式的，但是当开发到一半的时候，需求有了一些改动，那么使用适配器模式，是一种低成本的方法，来实现新的需求。</p>
-<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a href="https://book.douban.com/subject/26933281/" target="_blank" rel="external">图解设计模式</a><br><a href="https://book.douban.com/subject/4260618/" target="_blank" rel="external">设计模式之禅</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2014,7 +2011,7 @@ J = F^2  = B^3^2   = A^^3^2
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
