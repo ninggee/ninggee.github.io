@@ -229,6 +229,182 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/11/02/design-pattern-22/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ningge">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="凝戈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/02/design-pattern-22/" itemprop="url">Pattern 22. Command模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-02T15:48:15+08:00">
+                2017-11-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式学习/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
+<p>Encapsulate a request as an object,thereby letting you parameterize clients with different requests,queue or log requests,and support undoable operations.</p>
+</blockquote>
+<p>命令模式：将一个请求封装成一个对象，因此让你可以使用不同的请求使客户端参数化，队列化请求或记录请求日志，同时支持回滚操作。<br>命令模式又称动作模式或者是事务模式。</p>
+<p>关于命令模式，其实主要是讲请求抽象化，作为变量传给客户端。事实上，是一种解耦，因为请求作为一个参数，请求的发起者不必知道处理者是谁，这样，请求的发起者，和请求的处理者就解耦了。<br>下面来看命令模式是如何工作的：</p>
+<h3 id="如何工作"><a href="#如何工作" class="headerlink" title="如何工作"></a>如何工作</h3><p>我们通过看命令模式的定义，实际上就可以知道命令模式的工作原理。那就是：将一个请求封装成一个对象。看起来是十分简单的一个说法，但是只有命令的话，没有命令的接收者和发起者是没有意义的。因此，还要考虑到请求的处理者和发起者。<br>下面还是看一段代码示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//receiver类</span></div><div class="line"><span class="comment">//receiver类是命令的处理者，负责处理命令</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Receiver</span> </span>&#123;</div><div class="line">    <span class="comment">//receiver is command real performer</span></div><div class="line">    <span class="comment">//receiver will real handle request from client</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//具体的处理者，实现处理接口定义的函数</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteReceiver</span> <span class="keyword">extends</span> <span class="title">Receiver</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// do something</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//命令类</span></div><div class="line"><span class="comment">//命令类的接口很简单，就是命令可以被处理</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Command</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//具体的命令类</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteCommand</span> <span class="keyword">extends</span> <span class="title">Command</span> </span>&#123;</div><div class="line">    <span class="comment">//关于命令的处理者，</span></div><div class="line">    <span class="keyword">private</span> Receiver receiver;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteCommand</span><span class="params">(Receiver receiver)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.receiver = receiver;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span> </span>&#123;</div><div class="line">        receiver.doSomething();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//命令的调用者，实际上就是负责专门调用命令的execute方法的角色</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Invoker</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> Command command;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Invoker</span><span class="params">(Command command)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.command = command;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCommand</span><span class="params">(Command command)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.command = command;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Command <span class="title">getCommand</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> command;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleCommand</span><span class="params">()</span> </span>&#123;</div><div class="line">        command.execute();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到，命令模式的本质是对命令也就是发出的请求进行封装，将发出命令的职责和执行命令的职责分开。</p>
+<p>其中：</p>
+<ul>
+<li>每个命令都是一个操作，也可以说每个操作都是一个命令，针对不同的操作可能有不同的子类。</li>
+<li>命令模式使得命令的发送者，在发出命令之后，对该条命令的状态一无所知，这也正是他们的独立性的体现。</li>
+<li>命令模式关键在于有一个抽象的类或者接口表示命令类，只有实现了这个接口的类，才可以被传递，被接受者处理</li>
+</ul>
+<p>下面是命令模式的图示：</p>
+<p><img src="http://wx4.sinaimg.cn/mw690/e488f771gy1fl3sifiwp8j20ck05mt9c.jpg" alt="6D134AA9-AED5-497D-8EE6-EEFD6B232649.png"></p>
+<h3 id="命令模式中的角色"><a href="#命令模式中的角色" class="headerlink" title="命令模式中的角色"></a>命令模式中的角色</h3><ol>
+<li>receiver：接收者是命令的最终的处理者。</li>
+<li>command：抽象的command类，定义了command类必须实现的接口。</li>
+<li>concreteCommand:具体的command类，实现了定义的接口，一般来说，一个动作是一个command类。</li>
+<li>invoker：命令的调用者，实际上就是对传进来的命令调用他的处理方法。</li>
+</ol>
+<h3 id="命令模式的优点"><a href="#命令模式的优点" class="headerlink" title="命令模式的优点"></a>命令模式的优点</h3><ol>
+<li>将命令的发送和处理解耦</li>
+<li>扩展性好，命令类非常容易扩展</li>
+<li>容易实现命令的回滚和Redo</li>
+</ol>
+<h3 id="命令模式的缺点"><a href="#命令模式的缺点" class="headerlink" title="命令模式的缺点"></a>命令模式的缺点</h3><ol>
+<li>命令类可能会膨胀</li>
+</ol>
+<h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><ol>
+<li>需要redo和undo的场景</li>
+<li>可以被看成是命令的场景</li>
+</ol>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a href="https://book.douban.com/subject/26933281/" target="_blank" rel="external">图解设计模式</a><br><a href="https://book.douban.com/subject/4260618/" target="_blank" rel="external">设计模式之禅</a><br><a href="https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/command.html" target="_blank" rel="external">图说设计模式-命令模式</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/11/02/design-pattern-21/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1779,177 +1955,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/28/design-pattern-12/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ningge">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="凝戈">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/28/design-pattern-12/" itemprop="url">Pattern 12. Composite模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-28T11:37:47+08:00">
-                2017-10-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式学习/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
-<p>Compose objects into tree structures to represent part-whole hierarchies.Composite lets clients treat individual objects and compositions of objects uniformly</p>
-</blockquote>
-<p>将对象组织成树形结构来表示<strong>部分-整体</strong>的层次关系。组合使客户端统一的看待单个对象和组合对象。</p>
-<p>组合模式又称合成模式，有时也被称为<strong>部分-整体</strong>模式，描述了部分与整体的关系。</p>
-<p>可以说，凡是形成了树形结构的对象（们），都可以利用组合模式。下面来看一下组合模式是如何工作的。</p>
-<h3 id="如何工作"><a href="#如何工作" class="headerlink" title="如何工作"></a>如何工作</h3><p>根据定义，组合模式首先要把对象们组织成树形结构，然后要使客户端能将一致的看待个体和整体。那么很显然，方法就是将部分和整体提取出一个父类，使他们都继承自一个父类，这样就可以把他们看成是父类的对象。同时，使组合对象能嵌套的包含个体对象和组合对象，这样就可以形成树形结构了。下面看一段代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//组件类</span></div><div class="line"><span class="comment">//个体和整体的统一的父类</span></div><div class="line"><span class="comment">//一般为抽象类</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Component</span></span>&#123;</div><div class="line">    </div><div class="line">    <span class="comment">//部分与整体都有的行为</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">commonDo</span><span class="params">()</span></span>;</div><div class="line">    </div><div class="line">    <span class="comment">//------------------------</span></div><div class="line">    <span class="comment">//整体特有的行为</span></div><div class="line">    </div><div class="line">    <span class="comment">//添加部分到整体</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(Component component)</span></span>;</div><div class="line">    </div><div class="line">    <span class="comment">//从整体移除部分</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(Component component)</span></span>;</div><div class="line">    </div><div class="line">    <span class="comment">//从整体中提取全部的子</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> List&lt;Component&gt; <span class="title">getChild</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//部分类</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Leaf</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</div><div class="line">    <span class="comment">//部分与整体都有的行为</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">commonDo</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"common do"</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//------------------------</span></div><div class="line">    <span class="comment">//整体特有的行为</span></div><div class="line">    </div><div class="line">    <span class="comment">//添加部分到整体</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(Component component)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"unsupport operation"</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//从整体移除部分</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(Component component)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"unsupport operation"</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//从整体中提取全部的子</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> List&lt;Component&gt; <span class="title">getChild</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"unsupport operation"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//整体类</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Composite</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> List&lt;Component&gt; composite = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    <span class="comment">//部分与整体都有的行为</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">commonDo</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"common do"</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//------------------------</span></div><div class="line">    <span class="comment">//整体特有的行为</span></div><div class="line">    </div><div class="line">    <span class="comment">//添加部分到整体</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(Component component)</span> </span>&#123;</div><div class="line">        composite.add(component);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//从整体移除部分</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(Component component)</span> </span>&#123;</div><div class="line">       <span class="comment">//remove from list</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//从整体中提取全部的子</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> List&lt;Component&gt; <span class="title">getChild</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> composite;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>整体上代码并不复杂，需要注意的一点是，关于整体特有的方法是方法父类，还是下放到子类的问题。<br>如果放到父类的话，那么在子类中，个体类要么直接报错，要么什么都不做，或者不实现。<br>如果是只放到整体类中，那就需要在使用的过程中进行判断，同时进行类型的转换，来使用整体特有的方法。</p>
-<p>到底使用哪种方法，就看个人的喜好了。</p>
-<p>下面来看组合模式的图示：</p>
-<p><img src="http://wx4.sinaimg.cn/mw690/e488f771ly1fkxt4oagbmj21ew0ygteq.jpg" alt="D59FCC72-BB5A-46B0-921A-29D4600DF349.png"></p>
-<h3 id="组合模式中的角色"><a href="#组合模式中的角色" class="headerlink" title="组合模式中的角色"></a>组合模式中的角色</h3><ol>
-<li><code>component</code>： 组件类，是整体和个体的父类，使整体和个体可以被看成一个整体。同时定义了一些通用的方法。</li>
-<li><code>Leaf</code>：叶子节点类，是部分类。</li>
-<li><code>Composite</code>:整体类，包含叶子节点和嵌套的包含整体节点</li>
-</ol>
-<h3 id="我理解的组合模式"><a href="#我理解的组合模式" class="headerlink" title="我理解的组合模式"></a>我理解的组合模式</h3><p>对于组合模式来说，我觉得图解设计模式这本书中的例子很形象：<br>对于文件夹和文件的例子，如果不使用组合模式，而是将文件夹和文件看成两个独立的类，二者之间没有什么关联，我们可以想象，如果要写一个程序来往文件夹添加文件和文件夹，然后遍历一个文件夹，计算文件夹的大小会有多么的麻烦。</p>
-<p>但是使用了组合模式整个代码就会变得很整洁，也很好写。</p>
-<p>因此组合模式，是对树形结构的一种利用，抽象出共同点，形成抽象父类，便于统一管理</p>
-<h3 id="组合模式的优点"><a href="#组合模式的优点" class="headerlink" title="组合模式的优点"></a>组合模式的优点</h3><ol>
-<li>客户端调用简单，对于客户端来说，可以一致的把叶子节点和整体节点看成组件类，使用简单</li>
-<li>节点可以自由的添加，无论是想在一个整体节点里添加叶子节点还要整体节点都是十分简单的事情。</li>
-</ol>
-<h3 id="组合模式的缺点"><a href="#组合模式的缺点" class="headerlink" title="组合模式的缺点"></a>组合模式的缺点</h3><p>我暂时还没想到^_^</p>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ol>
-<li>维护部分和整体关系时，或者对象间可以形成树形结构时。</li>
-<li>从整体可以独立出部分模块的时候。</li>
-</ol>
-<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a href="https://book.douban.com/subject/26933281/" target="_blank" rel="external">图解设计模式</a><br><a href="https://book.douban.com/subject/4260618/" target="_blank" rel="external">设计模式之禅</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1999,7 +2004,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
