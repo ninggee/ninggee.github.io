@@ -53,7 +53,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="design pattern," />
+  <meta name="keywords" content="Linux,服务器," />
 
 
 
@@ -69,20 +69,18 @@
 
 
 
-<meta name="description" content="定义 Ensure a class has only one instance, and provide a global point of access to it.  确保一个类只有一个实例，并且使整个系统都能访问它。（提供一个全局的可以访问到它的点） 单例模式是个比较简单的模式，当你想要确保：  在任何情况下都绝对只要一个实例 在程序中表示出“在任何时刻只存在一个实例”  的时候，就是使用单">
-<meta name="keywords" content="design pattern">
+<meta name="description" content="locate用于搜索指定的文件  调用方法 locate {file name} /var/lib/mlocate 是locate查询到数据库 updatedb更新数据库 查询遵循/etc/updatedb.conf的配置来查询 配置默认不搜索一些文件夹和文件系统，来减少误解  whereis用户查询命令以及其帮助文档的位置。  调用方法 whereis {command} options  -m">
+<meta name="keywords" content="Linux,服务器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Pattern 6. Singleton模式">
-<meta property="og:url" content="https://ninggee.github.io/2017/10/02/design-pattern-6/index.html">
+<meta property="og:title" content="Linux中的搜索命令">
+<meta property="og:url" content="https://ninggee.github.io/2018/01/27/linux-search/index.html">
 <meta property="og:site_name" content="凝戈">
-<meta property="og:description" content="定义 Ensure a class has only one instance, and provide a global point of access to it.  确保一个类只有一个实例，并且使整个系统都能访问它。（提供一个全局的可以访问到它的点） 单例模式是个比较简单的模式，当你想要确保：  在任何情况下都绝对只要一个实例 在程序中表示出“在任何时刻只存在一个实例”  的时候，就是使用单">
+<meta property="og:description" content="locate用于搜索指定的文件  调用方法 locate {file name} /var/lib/mlocate 是locate查询到数据库 updatedb更新数据库 查询遵循/etc/updatedb.conf的配置来查询 配置默认不搜索一些文件夹和文件系统，来减少误解  whereis用户查询命令以及其帮助文档的位置。  调用方法 whereis {command} options  -m">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://wx2.sinaimg.cn/mw690/e488f771gy1fk3wisail0j20cl055aam.jpg">
-<meta property="og:updated_time" content="2017-10-19T15:25:07.982Z">
+<meta property="og:updated_time" content="2018-01-26T16:40:07.615Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Pattern 6. Singleton模式">
-<meta name="twitter:description" content="定义 Ensure a class has only one instance, and provide a global point of access to it.  确保一个类只有一个实例，并且使整个系统都能访问它。（提供一个全局的可以访问到它的点） 单例模式是个比较简单的模式，当你想要确保：  在任何情况下都绝对只要一个实例 在程序中表示出“在任何时刻只存在一个实例”  的时候，就是使用单">
-<meta name="twitter:image" content="https://wx2.sinaimg.cn/mw690/e488f771gy1fk3wisail0j20cl055aam.jpg">
+<meta name="twitter:title" content="Linux中的搜索命令">
+<meta name="twitter:description" content="locate用于搜索指定的文件  调用方法 locate {file name} /var/lib/mlocate 是locate查询到数据库 updatedb更新数据库 查询遵循/etc/updatedb.conf的配置来查询 配置默认不搜索一些文件夹和文件系统，来减少误解  whereis用户查询命令以及其帮助文档的位置。  调用方法 whereis {command} options  -m">
 
 
 
@@ -112,13 +110,13 @@
 
 
 
-  <link rel="canonical" href="https://ninggee.github.io/2017/10/02/design-pattern-6/"/>
+  <link rel="canonical" href="https://ninggee.github.io/2018/01/27/linux-search/"/>
 
 
 
 
 
-  <title>Pattern 6. Singleton模式 | 凝戈</title>
+  <title>Linux中的搜索命令 | 凝戈</title>
   
 
 
@@ -235,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/02/design-pattern-6/">
+    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2018/01/27/linux-search/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ningge">
@@ -252,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Pattern 6. Singleton模式</h1>
+          <h1 class="post-title" itemprop="name headline">Linux中的搜索命令</h1>
         
 
         <div class="post-meta">
@@ -264,8 +262,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-02T14:47:11+08:00">
-                2017-10-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-27T00:37:22+08:00">
+                2018-01-27
               </time>
             
 
@@ -287,8 +285,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式学习/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式学习</span>
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
                   </a>
                 </span>
 
@@ -324,37 +322,59 @@
       
 
       
-        <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
-<p>Ensure a class has only one instance, and provide a global point of access to it.</p>
-</blockquote>
-<p>确保一个类只有一个实例，并且使整个系统都能访问它。（提供一个全局的可以访问到它的点）</p>
-<p>单例模式是个比较简单的模式，当你想要确保：</p>
+        <h4 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h4><p>用于搜索指定的文件</p>
 <ul>
-<li>在任何情况下都绝对只要一个实例</li>
-<li>在程序中表示出“在任何时刻只存在一个实例”</li>
+<li>调用方法 <code>locate {file name}</code></li>
+<li><code>/var/lib/mlocate</code> 是locate查询到数据库</li>
+<li><code>updatedb</code>更新数据库</li>
+<li>查询遵循<code>/etc/updatedb.conf</code>的配置来查询</li>
+<li>配置默认不搜索一些文件夹和文件系统，来减少误解</li>
 </ul>
-<p>的时候，就是使用单例模式的时候</p>
-<h3 id="如何工作"><a href="#如何工作" class="headerlink" title="如何工作"></a>如何工作</h3><p>单例模式确实比较简单，用一个简单的类来表示一下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</div><div class="line"> <span class="comment">//此句表示当Singletong第一次被使用使初始化该变量</span></div><div class="line"> <span class="keyword">private</span> <span class="keyword">static</span> Singleton singleton = <span class="keyword">new</span> Singleton();</div><div class="line"> </div><div class="line"> <span class="comment">//private关键字保证外部无法通过new来实例化Singleton类</span></div><div class="line"> <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="comment">// initialize operations</span></div><div class="line"> &#125;</div><div class="line"> </div><div class="line"> <span class="comment">//该方法提供了全局可访问该类的点</span></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.singleton;</div><div class="line"> &#125;</div><div class="line"> </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>可以看到，对于单例类来说，代码和很简单，使用<code>private</code>关键字修饰构造函数，保证了该类不会被外部使用<code>new</code>实例化（使用反射还是可以实例化的），通过<code>getInstance</code>方法，提供了全局的访问点。<br>照例，下面是单例模式的图示：<br><img src="https://wx2.sinaimg.cn/mw690/e488f771gy1fk3wisail0j20cl055aam.jpg" alt="单例模式"></p>
-<h3 id="单例模式中的角色"><a href="#单例模式中的角色" class="headerlink" title="单例模式中的角色"></a>单例模式中的角色</h3><p>在单例模式中，只有单例类这一个角色，该角色有一个返回唯一实例的静态方法（静态很重要）。</p>
-<h3 id="单例模式的优点"><a href="#单例模式的优点" class="headerlink" title="单例模式的优点"></a>单例模式的优点</h3><ol>
-<li>只要一个实例，减少开销</li>
-<li>可以避免对资源的多重占用</li>
-<li>可以设置全局访问点，优化资源访问</li>
+<h4 id="whereis"><a href="#whereis" class="headerlink" title="whereis"></a>whereis</h4><p>用户查询<strong>命令</strong>以及其帮助文档的位置。</p>
+<ul>
+<li>调用方法 <code>whereis {command}</code></li>
+<li>options<br>  -m 只查找manual<br>  -b 只查找binary</li>
+<li>命令是干什么的 <code>whatis {command}</code></li>
+</ul>
+<h4 id="whichis"><a href="#whichis" class="headerlink" title="whichis"></a>whichis</h4><p>查找命令的位置，并显示其别名，如果有的话<br><code>whichis</code>类似于<code>whereis</code></p>
+<ul>
+<li>对于<code>shell</code>内置的命令，两者都找不到，因为没有可执行文件</li>
+<li>两者都是在<em>PATH</em>路径里面寻找命令</li>
+</ul>
+<h4 id="find"><a href="#find" class="headerlink" title="find"></a>find</h4><p>find是Linux中最强大的搜索命令</p>
+<ul>
+<li>使用方法：<code>find [搜索范围] [搜索条件]</code></li>
+<li>find默认情况下是完全匹配的，搜寻的条件和查询结果一致，模糊查询需要使用通配符</li>
+<li>通配符<ol>
+<li><code>*</code> 匹配任意多个字符</li>
+<li><code>?</code> 匹配任意一个字符</li>
+<li><code>[]</code> 匹配任意一个出现在括号里的字符</li>
 </ol>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ol>
-<li>需要定义大量的静态常量和静态方法（比如工具类，配置类）的时候</li>
-<li>一个对象需要频繁的创建，销毁时，且创建操作很消耗资源的时候</li>
-<li>整个项目中，只需要一个的共享访问点或共享数据（比如计数器</li>
+</li>
+<li>options: <ol>
+<li><code>-name</code> 按文件名</li>
+<li><code>-iname</code> 按文件名，不区分大小写</li>
+<li><code>-user</code> 按文件所有者</li>
+<li><code>-nouser</code> 查找没有所有者的文件</li>
+<li><code>-atime -ctime -mtime {[+-]day}</code> 查找对应时间的相应操作的文件</li>
+<li><code>-size {[+-]size}</code> 查找[大于小于]正好等于size大小的文件</li>
+<li><code>-inum {inode}</code> 按照inode号来查找文件</li>
+<li><code>{条件1} -a {条件2}</code> 同时满足条件1和条件2</li>
+<li><code>{条件1} -o {条件2}</code> 满足条件1或条件2</li>
+<li><code>-exec command {} \;</code> 将find的结果替换<code>{}</code>然后执行command命令,<code>\;</code>代表一条一条结果执行command</li>
+<li><code>-exec command {} +</code> 类似上一条，不过<code>+</code>代表全部结果执行一条命令<h4 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h4>在文件中，查找符合要求的字符串</li>
 </ol>
-<h3 id="单例模式的缺点"><a href="#单例模式的缺点" class="headerlink" title="单例模式的缺点"></a>单例模式的缺点</h3><ol>
-<li>对测试不友好<br>不容易mock（因为没什么接口）</li>
-<li>难以扩展</li>
-<li>违背单一职责原则<br>保证单例和业务逻辑在一个类实现。</li>
+</li>
+<li>使用方法<code>grep [options] {file name}</code></li>
+<li>options：<ol>
+<li><code>-v</code> 取反，选择不包含关键字的字符串</li>
+<li><code>-i</code> 忽略大小写</li>
 </ol>
-<h3 id="单例模式的扩展"><a href="#单例模式的扩展" class="headerlink" title="单例模式的扩展"></a>单例模式的扩展</h3><p>单例模式可以扩展成为多例模式。<br>只需在类里面只有一个容易保存固定数量的实例即可。</p>
-<h3 id="需要注意的一点"><a href="#需要注意的一点" class="headerlink" title="需要注意的一点"></a>需要注意的一点</h3><p>单例模式在<strong>JAVA</strong>中要注意实现方法，否则在多线程情况下，可能会产生多个实例。（饿汉和懒汉式单例</p>
-<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a href="https://book.douban.com/subject/26933281/" target="_blank" rel="external">图解设计模式</a><br><a href="https://book.douban.com/subject/4260618/" target="_blank" rel="external">设计模式之禅</a></p>
+</li>
+<li><code>grep</code>是包含匹配，区别于<code>find</code></li>
+<li><code>grep</code>可以使用正则表达式来匹配</li>
+<li>匹配内容使用通配符，匹配字符串（文件内容）使用正则表达式</li>
+</ul>
 
       
     </div>
@@ -372,7 +392,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/design-pattern/" rel="tag"># design pattern</a>
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/服务器/" rel="tag"># 服务器</a>
           
         </div>
       
@@ -385,8 +407,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/02/design-pattern-5/" rel="next" title="Pattern 5. Abstract Factory模式">
-                <i class="fa fa-chevron-left"></i> Pattern 5. Abstract Factory模式
+              <a href="/2017/11/02/design-pattern-22/" rel="next" title="Pattern 22. Command模式">
+                <i class="fa fa-chevron-left"></i> Pattern 22. Command模式
               </a>
             
           </div>
@@ -394,10 +416,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/10/02/design-pattern-7/" rel="prev" title="Pattern 7. Prototype模式">
-                Pattern 7. Prototype模式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -530,7 +548,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何工作"><span class="nav-number">2.</span> <span class="nav-text">如何工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单例模式中的角色"><span class="nav-number">3.</span> <span class="nav-text">单例模式中的角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单例模式的优点"><span class="nav-number">4.</span> <span class="nav-text">单例模式的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用场景"><span class="nav-number">5.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单例模式的缺点"><span class="nav-number">6.</span> <span class="nav-text">单例模式的缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单例模式的扩展"><span class="nav-number">7.</span> <span class="nav-text">单例模式的扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#需要注意的一点"><span class="nav-number">8.</span> <span class="nav-text">需要注意的一点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献"><span class="nav-number">9.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#locate"><span class="nav-number">1.</span> <span class="nav-text">locate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#whereis"><span class="nav-number">2.</span> <span class="nav-text">whereis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#whichis"><span class="nav-number">3.</span> <span class="nav-text">whichis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#find"><span class="nav-number">4.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#grep"><span class="nav-number">5.</span> <span class="nav-text">grep</span></a></li></ol></div>
             
 
           </div>
