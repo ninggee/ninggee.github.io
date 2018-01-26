@@ -77,7 +77,7 @@
 <meta property="og:site_name" content="凝戈">
 <meta property="og:description" content="locate用于搜索指定的文件  调用方法 locate {file name} /var/lib/mlocate 是locate查询到数据库 updatedb更新数据库 查询遵循/etc/updatedb.conf的配置来查询 配置默认不搜索一些文件夹和文件系统，来减少误解  whereis用户查询命令以及其帮助文档的位置。  调用方法 whereis {command} options  -m">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-26T16:40:07.615Z">
+<meta property="og:updated_time" content="2018-01-26T16:41:27.759Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux中的搜索命令">
 <meta name="twitter:description" content="locate用于搜索指定的文件  调用方法 locate {file name} /var/lib/mlocate 是locate查询到数据库 updatedb更新数据库 查询遵循/etc/updatedb.conf的配置来查询 配置默认不搜索一些文件夹和文件系统，来减少误解  whereis用户查询命令以及其帮助文档的位置。  调用方法 whereis {command} options  -m">
@@ -362,9 +362,12 @@
 <li><code>{条件1} -a {条件2}</code> 同时满足条件1和条件2</li>
 <li><code>{条件1} -o {条件2}</code> 满足条件1或条件2</li>
 <li><code>-exec command {} \;</code> 将find的结果替换<code>{}</code>然后执行command命令,<code>\;</code>代表一条一条结果执行command</li>
-<li><code>-exec command {} +</code> 类似上一条，不过<code>+</code>代表全部结果执行一条命令<h4 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h4>在文件中，查找符合要求的字符串</li>
+<li><code>-exec command {} +</code> 类似上一条，不过<code>+</code>代表全部结果执行一条命令</li>
 </ol>
 </li>
+</ul>
+<h4 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h4><p>在文件中，查找符合要求的字符串</p>
+<ul>
 <li>使用方法<code>grep [options] {file name}</code></li>
 <li>options：<ol>
 <li><code>-v</code> 取反，选择不包含关键字的字符串</li>

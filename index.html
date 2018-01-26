@@ -362,9 +362,12 @@
 <li><code>{条件1} -a {条件2}</code> 同时满足条件1和条件2</li>
 <li><code>{条件1} -o {条件2}</code> 满足条件1或条件2</li>
 <li><code>-exec command {} \;</code> 将find的结果替换<code>{}</code>然后执行command命令,<code>\;</code>代表一条一条结果执行command</li>
-<li><code>-exec command {} +</code> 类似上一条，不过<code>+</code>代表全部结果执行一条命令<h4 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h4>在文件中，查找符合要求的字符串</li>
+<li><code>-exec command {} +</code> 类似上一条，不过<code>+</code>代表全部结果执行一条命令</li>
 </ol>
 </li>
+</ul>
+<h4 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h4><p>在文件中，查找符合要求的字符串</p>
+<ul>
 <li>使用方法<code>grep [options] {file name}</code></li>
 <li>options：<ol>
 <li><code>-v</code> 取反，选择不包含关键字的字符串</li>
