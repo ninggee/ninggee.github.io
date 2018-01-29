@@ -69,18 +69,18 @@
 
 
 
-<meta name="description" content="locate用于搜索指定的文件  调用方法 locate {file name} /var/lib/mlocate 是locate查询到数据库 updatedb更新数据库 查询遵循/etc/updatedb.conf的配置来查询 配置默认不搜索一些文件夹和文件系统，来减少误解  whereis用户查询命令以及其帮助文档的位置。  调用方法 whereis {command} options  -m">
+<meta name="description" content="常见的压缩格式 zip后缀 .zip与gzip相比：可以压缩目录；可以保留原文件，可以在Windows和Linux上通用 gzip后缀 .gz不能压缩目录,压缩率比zip高 bzip2后缀 .bz2bzip2比gzip压缩率更高，但是耗时更多 .tar.gz .tar.bz2实际上tar是打包命令，.tar是被打好的包。因此常用的压缩格式只有三种  zip的压缩与解压12345zip &amp;#123;">
 <meta name="keywords" content="Linux,服务器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux中的搜索命令">
-<meta property="og:url" content="https://ninggee.github.io/2018/01/27/linux-search/index.html">
+<meta property="og:title" content="linux-compress">
+<meta property="og:url" content="https://ninggee.github.io/2018/01/30/linux-compress/index.html">
 <meta property="og:site_name" content="凝戈">
-<meta property="og:description" content="locate用于搜索指定的文件  调用方法 locate {file name} /var/lib/mlocate 是locate查询到数据库 updatedb更新数据库 查询遵循/etc/updatedb.conf的配置来查询 配置默认不搜索一些文件夹和文件系统，来减少误解  whereis用户查询命令以及其帮助文档的位置。  调用方法 whereis {command} options  -m">
+<meta property="og:description" content="常见的压缩格式 zip后缀 .zip与gzip相比：可以压缩目录；可以保留原文件，可以在Windows和Linux上通用 gzip后缀 .gz不能压缩目录,压缩率比zip高 bzip2后缀 .bz2bzip2比gzip压缩率更高，但是耗时更多 .tar.gz .tar.bz2实际上tar是打包命令，.tar是被打好的包。因此常用的压缩格式只有三种  zip的压缩与解压12345zip &amp;#123;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-26T16:41:27.759Z">
+<meta property="og:updated_time" content="2018-01-29T17:09:52.339Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux中的搜索命令">
-<meta name="twitter:description" content="locate用于搜索指定的文件  调用方法 locate {file name} /var/lib/mlocate 是locate查询到数据库 updatedb更新数据库 查询遵循/etc/updatedb.conf的配置来查询 配置默认不搜索一些文件夹和文件系统，来减少误解  whereis用户查询命令以及其帮助文档的位置。  调用方法 whereis {command} options  -m">
+<meta name="twitter:title" content="linux-compress">
+<meta name="twitter:description" content="常见的压缩格式 zip后缀 .zip与gzip相比：可以压缩目录；可以保留原文件，可以在Windows和Linux上通用 gzip后缀 .gz不能压缩目录,压缩率比zip高 bzip2后缀 .bz2bzip2比gzip压缩率更高，但是耗时更多 .tar.gz .tar.bz2实际上tar是打包命令，.tar是被打好的包。因此常用的压缩格式只有三种  zip的压缩与解压12345zip &amp;#123;">
 
 
 
@@ -110,13 +110,13 @@
 
 
 
-  <link rel="canonical" href="https://ninggee.github.io/2018/01/27/linux-search/"/>
+  <link rel="canonical" href="https://ninggee.github.io/2018/01/30/linux-compress/"/>
 
 
 
 
 
-  <title>Linux中的搜索命令 | 凝戈</title>
+  <title>linux-compress | 凝戈</title>
   
 
 
@@ -233,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2018/01/27/linux-search/">
+    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2018/01/30/linux-compress/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ningge">
@@ -250,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux中的搜索命令</h1>
+          <h1 class="post-title" itemprop="name headline">linux-compress</h1>
         
 
         <div class="post-meta">
@@ -262,8 +262,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-27T00:37:22+08:00">
-                2018-01-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-30T01:09:17+08:00">
+                2018-01-30
               </time>
             
 
@@ -322,62 +322,18 @@
       
 
       
-        <h4 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h4><p>用于搜索指定的文件</p>
-<ul>
-<li>调用方法 <code>locate {file name}</code></li>
-<li><code>/var/lib/mlocate</code> 是locate查询到数据库</li>
-<li><code>updatedb</code>更新数据库</li>
-<li>查询遵循<code>/etc/updatedb.conf</code>的配置来查询</li>
-<li>配置默认不搜索一些文件夹和文件系统，来减少误解</li>
+        <h4 id="常见的压缩格式"><a href="#常见的压缩格式" class="headerlink" title="常见的压缩格式"></a>常见的压缩格式</h4><ul>
+<li>zip<br>后缀 .zip<br>与gzip相比：可以压缩目录；可以保留原文件，可以在Windows和Linux上通用</li>
+<li>gzip<br>后缀 .gz<br>不能压缩目录,压缩率比zip高</li>
+<li>bzip2<br>后缀 .bz2<br>bzip2比gzip压缩率更高，但是耗时更多</li>
+<li>.tar.gz</li>
+<li>.tar.bz2<br>实际上<code>tar</code>是打包命令，<code>.tar</code>是被打好的包。因此常用的压缩格式只有三种</li>
 </ul>
-<h4 id="whereis"><a href="#whereis" class="headerlink" title="whereis"></a>whereis</h4><p>用户查询<strong>命令</strong>以及其帮助文档的位置。</p>
-<ul>
-<li>调用方法 <code>whereis {command}</code></li>
-<li>options<br>  -m 只查找manual<br>  -b 只查找binary</li>
-<li>命令是干什么的 <code>whatis {command}</code></li>
-</ul>
-<h4 id="whichis"><a href="#whichis" class="headerlink" title="whichis"></a>whichis</h4><p>查找命令的位置，并显示其别名，如果有的话<br><code>whichis</code>类似于<code>whereis</code></p>
-<ul>
-<li>对于<code>shell</code>内置的命令，两者都找不到，因为没有可执行文件</li>
-<li>两者都是在<em>PATH</em>路径里面寻找命令</li>
-</ul>
-<h4 id="find"><a href="#find" class="headerlink" title="find"></a>find</h4><p>find是Linux中最强大的搜索命令</p>
-<ul>
-<li>使用方法：<code>find [搜索范围] [搜索条件]</code></li>
-<li>find默认情况下是完全匹配的，搜寻的条件和查询结果一致，模糊查询需要使用通配符</li>
-<li>通配符<ol>
-<li><code>*</code> 匹配任意多个字符</li>
-<li><code>?</code> 匹配任意一个字符</li>
-<li><code>[]</code> 匹配任意一个出现在括号里的字符</li>
-</ol>
-</li>
-<li>options: <ol>
-<li><code>-name</code> 按文件名</li>
-<li><code>-iname</code> 按文件名，不区分大小写</li>
-<li><code>-user</code> 按文件所有者</li>
-<li><code>-nouser</code> 查找没有所有者的文件</li>
-<li><code>-atime -ctime -mtime {[+-]day}</code> 查找对应时间的相应操作的文件</li>
-<li><code>-size {[+-]size}</code> 查找[大于小于]正好等于size大小的文件</li>
-<li><code>-inum {inode}</code> 按照inode号来查找文件</li>
-<li><code>{条件1} -a {条件2}</code> 同时满足条件1和条件2</li>
-<li><code>{条件1} -o {条件2}</code> 满足条件1或条件2</li>
-<li><code>-exec command {} \;</code> 将find的结果替换<code>{}</code>然后执行command命令,<code>\;</code>代表一条一条结果执行command</li>
-<li><code>-exec command {} +</code> 类似上一条，不过<code>+</code>代表全部结果执行一条命令</li>
-</ol>
-</li>
-</ul>
-<h4 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h4><p>在文件中，查找符合要求的字符串</p>
-<ul>
-<li>使用方法<code>grep [options] {file name}</code></li>
-<li>options：<ol>
-<li><code>-v</code> 取反，选择不包含关键字的字符串</li>
-<li><code>-i</code> 忽略大小写</li>
-</ol>
-</li>
-<li><code>grep</code>是包含匹配，区别于<code>find</code></li>
-<li><code>grep</code>可以使用正则表达式来匹配</li>
-<li>匹配内容使用通配符，匹配字符串（文件内容）使用正则表达式</li>
-</ul>
+<h4 id="zip的压缩与解压"><a href="#zip的压缩与解压" class="headerlink" title="zip的压缩与解压"></a>zip的压缩与解压</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">zip &#123;tarage_file&#125; &#123;source_file&#125; # 压缩文件</div><div class="line"></div><div class="line">zip -r &#123;target_file&#125; &#123;source_directory&#125; # 压缩目录</div><div class="line"></div><div class="line">unzip &#123;file_name&#125; #解压缩</div></pre></td></tr></table></figure>
+<h4 id="gzip的压缩与解压"><a href="#gzip的压缩与解压" class="headerlink" title="gzip的压缩与解压"></a>gzip的压缩与解压</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">gzip &#123;source_file&#125; #压缩源文件，但是源文件会小时</div><div class="line"></div><div class="line">gzip -c &#123;source_file&#125; &gt; &#123;target_file&#125; #压缩源文件，且源文件不会消失</div><div class="line"></div><div class="line">gzip -r &#123;source_directory&#125; #递归的压缩目录中的内容，但是不会压缩目录</div><div class="line"></div><div class="line">gzip -d &#123;file&#125; #解压缩文件</div><div class="line"></div><div class="line">gunzip &#123;file&#125; #解压缩文件</div><div class="line"></div><div class="line">gunzip -r &#123;directory&#125; #递归的解压目录中的压缩文件</div></pre></td></tr></table></figure>
+<h4 id="bzip2的压缩与解压"><a href="#bzip2的压缩与解压" class="headerlink" title="bzip2的压缩与解压"></a>bzip2的压缩与解压</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">bzip2 &#123;source&#125; #压缩文件，源文件不保留</div><div class="line"></div><div class="line">bzip2 -k &#123;source&#125; #压缩文件，保留源文件</div><div class="line"></div><div class="line">bzip2 -d &#123;file&#125; #解压缩文件，不保留压缩文件</div><div class="line"></div><div class="line">bzip -d -k &#123;file&#125; #解压缩文件，保留压缩文件</div><div class="line"></div><div class="line">bunzip2 &#123;file&#125; # 解压缩文件，不保留压缩文件</div><div class="line"></div><div class="line">bunzip2 -k &#123;file&#125; #解压缩文件，保留压缩文件</div><div class="line"></div><div class="line"><span class="meta">#</span>bzip2不能压缩目录</div></pre></td></tr></table></figure>
+<h4 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h4><p>tar是Linux中的打包文件</p>
+<h5 id="命令用法"><a href="#命令用法" class="headerlink" title="命令用法"></a>命令用法</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">tar -cvf &#123;target&#125; &#123;source1 source2 ...&#125; # 打包文件</div><div class="line"><span class="meta">#</span> options</div><div class="line"><span class="meta">#</span>   -c: 打包</div><div class="line"><span class="meta">#</span>   -v：显示过程</div><div class="line"><span class="meta">#</span>   -f：指定打包后的文件名</div><div class="line"><span class="meta">#</span>   -C: 指定解包之后的位置</div><div class="line"><span class="meta">#</span>   -z：使用gzip压缩</div><div class="line"><span class="meta">#</span>   -j: 使用bzip2压缩</div><div class="line"><span class="meta">#</span>   -t: 查看包内的文件</div><div class="line"><span class="meta">#</span>   -x: 解包</div><div class="line"></div><div class="line">tar -xvf &#123;file&#125; -C &#123;target&#125; # 解打包的文件到指定位置</div><div class="line"><span class="meta">#</span> options</div><div class="line"><span class="meta">#</span>   -x: 解打包</div><div class="line"></div><div class="line">tar -zcvf &#123;target&#125; &#123;source1 source2 ...&#125; # 打包并使用gzip压缩</div><div class="line"></div><div class="line">tar -zxvf &#123;file&#125; -C &#123;target&#125; # 解压缩并解打包.tar.gz的文件到指定位置</div><div class="line"></div><div class="line">tar -jcvf &#123;target&#125; &#123;source1 source2  ...&#125; # 打包并使用bzip2压缩</div><div class="line"></div><div class="line">tar -jxvf &#123;file&#125; -C &#123;target&#125; # 解压缩并解打包.tar.bz的文件到指定位置</div><div class="line"></div><div class="line">tar -tvf &#123;file&#125; #查看包内内容</div><div class="line"></div><div class="line">tar -ztvf &#123;file&#125; #查看.tar.gz2压缩包内内容</div><div class="line"></div><div class="line">tar -jtvf &#123;file&#125; #查看.tar.bz2压缩包内内容</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -410,8 +366,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/02/design-pattern-22/" rel="next" title="Pattern 22. Command模式">
-                <i class="fa fa-chevron-left"></i> Pattern 22. Command模式
+              <a href="/2018/01/27/linux-search/" rel="next" title="Linux中的搜索命令">
+                <i class="fa fa-chevron-left"></i> Linux中的搜索命令
               </a>
             
           </div>
@@ -419,10 +375,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/30/linux-compress/" rel="prev" title="linux-compress">
-                linux-compress <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -555,7 +507,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#locate"><span class="nav-number">1.</span> <span class="nav-text">locate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#whereis"><span class="nav-number">2.</span> <span class="nav-text">whereis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#whichis"><span class="nav-number">3.</span> <span class="nav-text">whichis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#find"><span class="nav-number">4.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#grep"><span class="nav-number">5.</span> <span class="nav-text">grep</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#常见的压缩格式"><span class="nav-number">1.</span> <span class="nav-text">常见的压缩格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zip的压缩与解压"><span class="nav-number">2.</span> <span class="nav-text">zip的压缩与解压</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gzip的压缩与解压"><span class="nav-number">3.</span> <span class="nav-text">gzip的压缩与解压</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bzip2的压缩与解压"><span class="nav-number">4.</span> <span class="nav-text">bzip2的压缩与解压</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tar"><span class="nav-number">5.</span> <span class="nav-text">tar</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#命令用法"><span class="nav-number">5.1.</span> <span class="nav-text">命令用法</span></a></li></ol></li></ol></div>
             
 
           </div>

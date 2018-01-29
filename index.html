@@ -229,6 +229,159 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2018/01/30/linux-compress/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ningge">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="凝戈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/30/linux-compress/" itemprop="url">linux-compress</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-30T01:09:17+08:00">
+                2018-01-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="常见的压缩格式"><a href="#常见的压缩格式" class="headerlink" title="常见的压缩格式"></a>常见的压缩格式</h4><ul>
+<li>zip<br>后缀 .zip<br>与gzip相比：可以压缩目录；可以保留原文件，可以在Windows和Linux上通用</li>
+<li>gzip<br>后缀 .gz<br>不能压缩目录,压缩率比zip高</li>
+<li>bzip2<br>后缀 .bz2<br>bzip2比gzip压缩率更高，但是耗时更多</li>
+<li>.tar.gz</li>
+<li>.tar.bz2<br>实际上<code>tar</code>是打包命令，<code>.tar</code>是被打好的包。因此常用的压缩格式只有三种</li>
+</ul>
+<h4 id="zip的压缩与解压"><a href="#zip的压缩与解压" class="headerlink" title="zip的压缩与解压"></a>zip的压缩与解压</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">zip &#123;tarage_file&#125; &#123;source_file&#125; # 压缩文件</div><div class="line"></div><div class="line">zip -r &#123;target_file&#125; &#123;source_directory&#125; # 压缩目录</div><div class="line"></div><div class="line">unzip &#123;file_name&#125; #解压缩</div></pre></td></tr></table></figure>
+<h4 id="gzip的压缩与解压"><a href="#gzip的压缩与解压" class="headerlink" title="gzip的压缩与解压"></a>gzip的压缩与解压</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">gzip &#123;source_file&#125; #压缩源文件，但是源文件会小时</div><div class="line"></div><div class="line">gzip -c &#123;source_file&#125; &gt; &#123;target_file&#125; #压缩源文件，且源文件不会消失</div><div class="line"></div><div class="line">gzip -r &#123;source_directory&#125; #递归的压缩目录中的内容，但是不会压缩目录</div><div class="line"></div><div class="line">gzip -d &#123;file&#125; #解压缩文件</div><div class="line"></div><div class="line">gunzip &#123;file&#125; #解压缩文件</div><div class="line"></div><div class="line">gunzip -r &#123;directory&#125; #递归的解压目录中的压缩文件</div></pre></td></tr></table></figure>
+<h4 id="bzip2的压缩与解压"><a href="#bzip2的压缩与解压" class="headerlink" title="bzip2的压缩与解压"></a>bzip2的压缩与解压</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">bzip2 &#123;source&#125; #压缩文件，源文件不保留</div><div class="line"></div><div class="line">bzip2 -k &#123;source&#125; #压缩文件，保留源文件</div><div class="line"></div><div class="line">bzip2 -d &#123;file&#125; #解压缩文件，不保留压缩文件</div><div class="line"></div><div class="line">bzip -d -k &#123;file&#125; #解压缩文件，保留压缩文件</div><div class="line"></div><div class="line">bunzip2 &#123;file&#125; # 解压缩文件，不保留压缩文件</div><div class="line"></div><div class="line">bunzip2 -k &#123;file&#125; #解压缩文件，保留压缩文件</div><div class="line"></div><div class="line"><span class="meta">#</span>bzip2不能压缩目录</div></pre></td></tr></table></figure>
+<h4 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h4><p>tar是Linux中的打包文件</p>
+<h5 id="命令用法"><a href="#命令用法" class="headerlink" title="命令用法"></a>命令用法</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">tar -cvf &#123;target&#125; &#123;source1 source2 ...&#125; # 打包文件</div><div class="line"><span class="meta">#</span> options</div><div class="line"><span class="meta">#</span>   -c: 打包</div><div class="line"><span class="meta">#</span>   -v：显示过程</div><div class="line"><span class="meta">#</span>   -f：指定打包后的文件名</div><div class="line"><span class="meta">#</span>   -C: 指定解包之后的位置</div><div class="line"><span class="meta">#</span>   -z：使用gzip压缩</div><div class="line"><span class="meta">#</span>   -j: 使用bzip2压缩</div><div class="line"><span class="meta">#</span>   -t: 查看包内的文件</div><div class="line"><span class="meta">#</span>   -x: 解包</div><div class="line"></div><div class="line">tar -xvf &#123;file&#125; -C &#123;target&#125; # 解打包的文件到指定位置</div><div class="line"><span class="meta">#</span> options</div><div class="line"><span class="meta">#</span>   -x: 解打包</div><div class="line"></div><div class="line">tar -zcvf &#123;target&#125; &#123;source1 source2 ...&#125; # 打包并使用gzip压缩</div><div class="line"></div><div class="line">tar -zxvf &#123;file&#125; -C &#123;target&#125; # 解压缩并解打包.tar.gz的文件到指定位置</div><div class="line"></div><div class="line">tar -jcvf &#123;target&#125; &#123;source1 source2  ...&#125; # 打包并使用bzip2压缩</div><div class="line"></div><div class="line">tar -jxvf &#123;file&#125; -C &#123;target&#125; # 解压缩并解打包.tar.bz的文件到指定位置</div><div class="line"></div><div class="line">tar -tvf &#123;file&#125; #查看包内内容</div><div class="line"></div><div class="line">tar -ztvf &#123;file&#125; #查看.tar.gz2压缩包内内容</div><div class="line"></div><div class="line">tar -jtvf &#123;file&#125; #查看.tar.bz2压缩包内内容</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2018/01/27/linux-search/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1810,170 +1963,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/28/design-pattern-14/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ningge">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="凝戈">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/28/design-pattern-14/" itemprop="url">Pattern 14. Chain of Responsibility模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-28T22:11:22+08:00">
-                2017-10-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式学习/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
-<p>Avoid coupling the sender of a request to its receiver by giving more than one object a chance to handle the request.Chain the receiving objects and pass the request along the chain until an object handles it.</p>
-</blockquote>
-<p>通过使用超过一个对象机会来处理请求来避免请求的发送者和接受者耦合。把接收对象串起来成链，沿着这条链传递请求直到一个对象处理它。</p>
-<p>正如这个模式的名字–责任链模式说的那样，整个模式最后形成了一个处理请求的链。这也就暗示着责任链模式最重要的一点就是那个链。下面我们来看一下这个模式是如何工作的。</p>
-<h3 id="如何工作"><a href="#如何工作" class="headerlink" title="如何工作"></a>如何工作</h3><p>责任链模式，重点是形成那个链。我们很自然的就想到了我们学习过的数据结构–链表。链表是如何做的呢？链表除了储存了自己的信息之外，还储存了自己的后继的信息。这也正是责任链模式所采用的方法。下面我们来看代码。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//请求类</span></div><div class="line"><span class="comment">//在这个模式里，请求都没有出现在类图里，就不实现了，</span></div><div class="line"><span class="comment">//用一个空类来占位</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Request</span> </span>&#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//处理者类</span></div><div class="line"><span class="comment">//抽象的处理者</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Handler</span> </span>&#123;</div><div class="line">    <span class="comment">//保存后继元素来形成责任链</span></div><div class="line">    <span class="keyword">private</span> Handler successor;</div><div class="line">    </div><div class="line">    <span class="comment">//父类中定义一个接收处理者的构造函数</span></div><div class="line">    <span class="comment">//来保证子类一定有这个构造函数</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Handler</span><span class="params">(Handler handler)</span> </span>&#123;</div><div class="line">        successor = handler;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//判断当前的处理者能否处理当前请求</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">boolean</span> <span class="title">canHandle</span><span class="params">(Request request)</span></span>;</div><div class="line">    </div><div class="line">    <span class="comment">//处理请求的代码</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">handle</span><span class="params">(Request request)</span></span>;</div><div class="line"></div><div class="line">    <span class="comment">//获取后继元素</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Handler <span class="title">getSuccessor</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> successor;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//算是用到了模板方法模式吧</span></div><div class="line">    <span class="comment">//可以加上final关键字来阻止子类修改</span></div><div class="line">    <span class="comment">//判断当前的类能不能处理</span></div><div class="line">    <span class="comment">//能就处理，不能就交给下一个处理者处理</span></div><div class="line">    <span class="comment">//如果最后也没有元素来处理，就抛出异常或者用其他办法</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleRequest</span><span class="params">(Request request)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(canHandle(request)) &#123;</div><div class="line">            handle(request);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">if</span>(getSuccessor() != <span class="keyword">null</span>) &#123;</div><div class="line">                getSuccessor().handleRequest(request);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="comment">//没有处理者了，是抛出异常还是忽略都可以</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//具体的处理者</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteHandler</span> <span class="keyword">extends</span> <span class="title">Handler</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteHandler</span><span class="params">(Handler handler)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(handler);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">canHandle</span><span class="params">(Request request)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">handle</span><span class="params">(Request request)</span> </span>&#123;</div><div class="line">        <span class="comment">//处理请求的方法</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可以看到，责任链模式的主要思想就是通过类似链表的形式形成责任链，如果一个处理者可以处理，那么就在这里处理，如果不可以就传给下一个元素，这样的话，就避免了请求者和处理者解耦，也不需要一个角色来分配请求给对应的处理者。</p>
-<p>下面是责任链模式的图示：</p>
-<p><img src="https://wx1.sinaimg.cn/mw690/e488f771ly1fkybl5mnrcj21e00u4n29.jpg" alt="AEE2A4CC-A841-46DD-8CDF-6B5DFFC33410.png"></p>
-<h3 id="责任链模式中的角色"><a href="#责任链模式中的角色" class="headerlink" title="责任链模式中的角色"></a>责任链模式中的角色</h3><ol>
-<li>Handler:处理者定义了处理请求的接口，实现了责任链模式的基本逻辑，每个处理者保存自己的后继者，如果自己能处理请求就自己处理，不能处理就传给下一给处理者。</li>
-<li>ConcreteHandler：具体的处理者。实现了各自的处理函数。</li>
-<li>Client:客户端负责生成责任链，将请求发给第一个处理者。</li>
-</ol>
-<h3 id="我理解的责任链模式"><a href="#我理解的责任链模式" class="headerlink" title="我理解的责任链模式"></a>我理解的责任链模式</h3><p>我觉得责任链模式主要的意义在于解耦，解耦了请求和请求的处理者。同时也不需要一个分发请求的角色。<br>而责任链模式的重点在于链，形成了一个链。这样就不用考虑到底谁能处理请求，处理不了就一直往下传递就可以了。</p>
-<h3 id="责任链模式的优点"><a href="#责任链模式的优点" class="headerlink" title="责任链模式的优点"></a>责任链模式的优点</h3><p>优点就是解耦了请求和请求的处理者。</p>
-<h3 id="责任链模式的缺点"><a href="#责任链模式的缺点" class="headerlink" title="责任链模式的缺点"></a>责任链模式的缺点</h3><ol>
-<li>debug困难。当责任链成形之后，在某一环节出错，找到到底是哪一个环节出错是很困难得。</li>
-<li>当责任链特别长的时候，会造成形成的问题。每个请去要很久才会有回复。</li>
-</ol>
-<h3 id="责任链模式的应用场景"><a href="#责任链模式的应用场景" class="headerlink" title="责任链模式的应用场景"></a>责任链模式的应用场景</h3><p>我个人觉得处理请求这类的情况都可以用责任链模式。</p>
-<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a href="https://book.douban.com/subject/26933281/" target="_blank" rel="external">图解设计模式</a><br><a href="https://book.douban.com/subject/4260618/" target="_blank" rel="external">设计模式之禅</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2023,7 +2012,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
