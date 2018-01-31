@@ -229,6 +229,186 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/28/design-pattern-15/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ningge">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="凝戈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/28/design-pattern-15/" itemprop="url">Pattern 15.  Facade模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-28T23:47:23+08:00">
+                2017-10-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式学习/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
+<p>Provide a unified interface to a set of interfaces in a subsystem.Facade defines a higher-level interface that makes the subsystem easier to use.</p>
+</blockquote>
+<p>为子系统的一系列接口提供一个统一的接口。门面模式定义了一个更高层的接口使子系统更容易使用。</p>
+<p>门面模式又被称为外观模式，是一种对象结构型模式。</p>
+<h3 id="如何工作"><a href="#如何工作" class="headerlink" title="如何工作"></a>如何工作</h3><p>门面模式的工作原理其实很简单。就是为子系统的多个接口提供一个更高层的接口，把对子系统的调用都限制外观模式的这个类里面。避免客户端对子系统耦合太过严重。</p>
+<p>虽然这个模式说起来很简单，也很好理解，但是实例代码写起来还是比较难写的。下面我就模仿设计模式之禅中通用代码来展示一下门面模式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//子系统类</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SubSystem1</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//子系统1实现自己的功能</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SubSystem2</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="comment">//子系统2实现自己的功能</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SubSystem3</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//子系统3实现自己的功能</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//门面类</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Facade</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">wrapDo</span><span class="params">()</span> </span>&#123;</div><div class="line">        SubSystem1 s1 = <span class="keyword">new</span> SubSystem1();</div><div class="line">        SubSystem2 s2 = <span class="keyword">new</span> SubSystem2();</div><div class="line">        SubSystem3 s3 = <span class="keyword">new</span> SubSystem3();</div><div class="line"></div><div class="line">        s1.doSomething();;</div><div class="line">        s2.doSomething();</div><div class="line">        s3.doSomething();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到，门面模式主要就是封装了子系统的调用到门面类。客户端无需知道子系统的复杂使用方法，只需要简单的调用门面模式提供的接口就可以了。<br>下面是门面模式的图示：</p>
+<p><img src="https://wx1.sinaimg.cn/mw690/e488f771ly1fkye84v1fvj21au0w20yf.jpg" alt="87E357BF-8B5F-4A7C-B077-6B92B940AA42.png"></p>
+<h3 id="门面模式中的角色"><a href="#门面模式中的角色" class="headerlink" title="门面模式中的角色"></a>门面模式中的角色</h3><ol>
+<li>Facade：客户端通过门面类来使用子系统的功能，门面类一般对子系统有全面的了解。</li>
+<li>子系统类：这个没什么好说的。一个系统可以有多个子系统，子系统对门面并不之情对于子系统来说，门面类只是他的一个使用者罢了。</li>
+</ol>
+<h3 id="我理解的门面模式"><a href="#我理解的门面模式" class="headerlink" title="我理解的门面模式"></a>我理解的门面模式</h3><p>我理解的门面模式就是屏蔽了客户端对子系统的复杂耦合。对于客户端时候能直接对子系统进行调用，设计模式之禅和图说设计模式两本书有不同的看法。</p>
+<ul>
+<li>设计模式之禅认为，门面类是外界访问子系统的唯一通道上，客户端不能直接对子系统进行访问，必须通过门面类。</li>
+<li>但是图说设计模式认为，不应该禁止客户端对子系统的访问，如果限制只能通过门面类访问子系统，就会使这个系统不够灵活。</li>
+</ul>
+<p>我觉得还是看业务需求吧，我个人倾向于禁止客户端直接访问子系统，不然门面存在的意义不是很小了吗。<br>我想的是抽象门面类形成接口，根据需求生成不同的门面类。</p>
+<h3 id="门面模式的优点"><a href="#门面模式的优点" class="headerlink" title="门面模式的优点"></a>门面模式的优点</h3><ol>
+<li>减少了系统之间的相互依赖，可以看到原来的客户端依赖子系统的各个类，变成只依赖门面，减少了大量的耦合关系</li>
+<li>提高了灵活性。依赖少了，自然变化的包袱就小了。子系统怎么变都可以，只需要改改门面内部的逻辑就可以了。</li>
+<li>提高了安全性，客户端只能访问门面提供了对子系统有限的访问。</li>
+</ol>
+<h3 id="门面模式的缺点"><a href="#门面模式的缺点" class="headerlink" title="门面模式的缺点"></a>门面模式的缺点</h3><ol>
+<li>不符合开闭原则，子系统的修改会直接修改门面类的代码。</li>
+</ol>
+<h3 id="门面模式的应用场景"><a href="#门面模式的应用场景" class="headerlink" title="门面模式的应用场景"></a>门面模式的应用场景</h3><ol>
+<li>为复杂的子系统提供简单的使用接口时。</li>
+<li>客户端与子系统存在大量的复杂的耦合，通过门面类来解耦。</li>
+<li>可以在多层结构中每层定义一个门面类，减少层与层之前的耦合<del>突然想起OSI七层结构</del></li>
+</ol>
+<h3 id="门面模式的扩展"><a href="#门面模式的扩展" class="headerlink" title="门面模式的扩展"></a>门面模式的扩展</h3><ol>
+<li>一个子系统可以有多个外观类</li>
+<li>外观类可以抽象出抽象的父类，便于扩展</li>
+</ol>
+<h3 id="门面模式的注意点"><a href="#门面模式的注意点" class="headerlink" title="门面模式的注意点"></a>门面模式的注意点</h3><p>不要把子系统的逻辑引入门面类，也可以说不要通过门面类来增加子系统的功能，门面类的职责很简单，就是去掉客户端对子系统的耦合关系，使客户端对子系统的调用更加简单。</p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a href="https://book.douban.com/subject/26933281/" target="_blank" rel="external">图解设计模式</a><br><a href="https://book.douban.com/subject/4260618/" target="_blank" rel="external">设计模式之禅</a><br><a href="https://design-patterns.readthedocs.io/zh_CN/latest/structural_patterns/facade.html" target="_blank" rel="external">图说设计模式-外观模式</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/28/design-pattern-14/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1789,178 +1969,6 @@ J = F^2  = B^3^2   = A^^3^2
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ninggee.github.io/2017/10/02/design-pattern-6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ningge">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="凝戈">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/02/design-pattern-6/" itemprop="url">Pattern 6. Singleton模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-02T14:47:11+08:00">
-                2017-10-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式学习/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><blockquote>
-<p>Ensure a class has only one instance, and provide a global point of access to it.</p>
-</blockquote>
-<p>确保一个类只有一个实例，并且使整个系统都能访问它。（提供一个全局的可以访问到它的点）</p>
-<p>单例模式是个比较简单的模式，当你想要确保：</p>
-<ul>
-<li>在任何情况下都绝对只要一个实例</li>
-<li>在程序中表示出“在任何时刻只存在一个实例”</li>
-</ul>
-<p>的时候，就是使用单例模式的时候</p>
-<h3 id="如何工作"><a href="#如何工作" class="headerlink" title="如何工作"></a>如何工作</h3><p>单例模式确实比较简单，用一个简单的类来表示一下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</div><div class="line"> <span class="comment">//此句表示当Singletong第一次被使用使初始化该变量</span></div><div class="line"> <span class="keyword">private</span> <span class="keyword">static</span> Singleton singleton = <span class="keyword">new</span> Singleton();</div><div class="line"> </div><div class="line"> <span class="comment">//private关键字保证外部无法通过new来实例化Singleton类</span></div><div class="line"> <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="comment">// initialize operations</span></div><div class="line"> &#125;</div><div class="line"> </div><div class="line"> <span class="comment">//该方法提供了全局可访问该类的点</span></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.singleton;</div><div class="line"> &#125;</div><div class="line"> </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>可以看到，对于单例类来说，代码和很简单，使用<code>private</code>关键字修饰构造函数，保证了该类不会被外部使用<code>new</code>实例化（使用反射还是可以实例化的），通过<code>getInstance</code>方法，提供了全局的访问点。<br>照例，下面是单例模式的图示：<br><img src="https://wx2.sinaimg.cn/mw690/e488f771gy1fk3wisail0j20cl055aam.jpg" alt="单例模式"></p>
-<h3 id="单例模式中的角色"><a href="#单例模式中的角色" class="headerlink" title="单例模式中的角色"></a>单例模式中的角色</h3><p>在单例模式中，只有单例类这一个角色，该角色有一个返回唯一实例的静态方法（静态很重要）。</p>
-<h3 id="单例模式的优点"><a href="#单例模式的优点" class="headerlink" title="单例模式的优点"></a>单例模式的优点</h3><ol>
-<li>只要一个实例，减少开销</li>
-<li>可以避免对资源的多重占用</li>
-<li>可以设置全局访问点，优化资源访问</li>
-</ol>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ol>
-<li>需要定义大量的静态常量和静态方法（比如工具类，配置类）的时候</li>
-<li>一个对象需要频繁的创建，销毁时，且创建操作很消耗资源的时候</li>
-<li>整个项目中，只需要一个的共享访问点或共享数据（比如计数器</li>
-</ol>
-<h3 id="单例模式的缺点"><a href="#单例模式的缺点" class="headerlink" title="单例模式的缺点"></a>单例模式的缺点</h3><ol>
-<li>对测试不友好<br>不容易mock（因为没什么接口）</li>
-<li>难以扩展</li>
-<li>违背单一职责原则<br>保证单例和业务逻辑在一个类实现。</li>
-</ol>
-<h3 id="单例模式的扩展"><a href="#单例模式的扩展" class="headerlink" title="单例模式的扩展"></a>单例模式的扩展</h3><p>单例模式可以扩展成为多例模式。<br>只需在类里面只有一个容易保存固定数量的实例即可。</p>
-<h3 id="需要注意的一点"><a href="#需要注意的一点" class="headerlink" title="需要注意的一点"></a>需要注意的一点</h3><p>单例模式在<strong>JAVA</strong>中要注意实现方法，否则在多线程情况下，可能会产生多个实例。（饿汉和懒汉式单例</p>
-<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a href="https://book.douban.com/subject/26933281/" target="_blank" rel="external">图解设计模式</a><br><a href="https://book.douban.com/subject/4260618/" target="_blank" rel="external">设计模式之禅</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2010,7 +2018,7 @@ J = F^2  = B^3^2   = A^^3^2
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
